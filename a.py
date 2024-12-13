@@ -148,6 +148,5 @@ fig.update_layout(
     showlegend=True
 )
 
-
 # Display the figure in Streamlit
 st.plotly_chart(fig)
