@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
-
+st.set_page_config(layout="wide")
 # Title for the Streamlit app
 st.title("Average Resale Price Analysis")
-st.set_page_config(layout="wide")
+
 
 # Instructions
 st.write("""
