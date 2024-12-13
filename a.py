@@ -12,7 +12,6 @@ This app visualizes the average resale price over the years.
 You can filter by towns, view the overall average, or examine trends by flat types.
 """)
 
-
 # Load the CSV file from Google Drive
 @st.cache_data
 def load_data():
@@ -80,7 +79,7 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='white'),
+        rangeslider=dict(visible=True, bgcolor='rgba(0,0,0,0)'),  # Transparent slider background
         type="date"
     ),
     updatemenus=[
@@ -122,7 +121,8 @@ fig.update_layout(
             'x': 0.887,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top'
+            'yanchor': 'top',
+            'bgcolor': 'rgba(0,0,0,0)'  # Transparent button background
         },
         {
             'buttons': [
@@ -137,7 +137,8 @@ fig.update_layout(
             'x': 0.55,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top'
+            'yanchor': 'top',
+            'bgcolor': 'rgba(0,0,0,0)'  # Transparent button background
         }
     ],
     showlegend=True
