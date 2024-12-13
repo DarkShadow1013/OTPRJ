@@ -157,7 +157,7 @@ fig.update_layout(
                 'width': 0
             },
             'opacity': 1,
-            'path': 'M 0 0 Q 10 0 10 10 L 10 90 Q 10 100 0 100 L 0 0 Z'  # Rounded corners path
+            'path': 'M 0 0 Q 90 0 10 10 L 10 90 Q 90 100 0 100 L 0 0 Z'  # Rounded corners path
         }
     ]
 )
