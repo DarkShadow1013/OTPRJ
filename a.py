@@ -79,7 +79,7 @@ fig.update_layout(
                 dict(step="all")
             ],
             # Move the range selector buttons higher by adjusting the 'y' value
-            y=0.8  # Adjusted to move the buttons higher
+            y=0.96  # Adjusted to move the buttons higher
         ),
         rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),  # Set slider background to light grey
         type="date"
@@ -126,7 +126,7 @@ fig.update_layout(
                 }
             ],
             'type': 'buttons',
-            'x': 0.9,
+            'x': 1,
             'xanchor': 'center',
             'y': 1.15,  # Keep button above the plot
             'yanchor': 'top'
@@ -141,7 +141,7 @@ fig.update_layout(
                 }
             ],
             'type': 'buttons',
-            'x': 0.6,
+            'x': 0.4,
             'xanchor': 'center',
             'y': 1.15,  # Keep button above the plot
             'yanchor': 'top'
