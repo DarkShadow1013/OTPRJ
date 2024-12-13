@@ -68,7 +68,7 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
 
 # Update the layout with dropdowns and buttons
 fig.update_layout(
-    title_text='write a title here', title_x=0.5,
+    title_text='Average Resale Price Over the Years', title_x=0.3, title_y=0.3,
     xaxis_title='Month',
     yaxis_title='Average Resale Price',
     xaxis=dict(
