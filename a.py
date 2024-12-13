@@ -146,10 +146,10 @@ fig.update_layout(
         # Adding a rounded rectangle shape for the entire plot area, making it bigger
         {
             'type': 'rect',
-            'x0': -0.85,  # Extend the left boundary
-            'y0': -0.85,  # Extend the bottom boundary
-            'x1': 1.85,   # Extend the right boundary
-            'y1': 1.85,   # Extend the top boundary
+            'x0': -0.15,  # Extend the left boundary
+            'y0': -0.15,  # Extend the bottom boundary
+            'x1': 1.15,   # Extend the right boundary
+            'y1': 1.15,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
             'fillcolor': 'rgba(211, 211, 211, 0.2)',  # Very light grey
