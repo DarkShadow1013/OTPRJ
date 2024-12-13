@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
+
 st.set_page_config(layout="wide")
 # Title for the Streamlit app
 st.title("Average Resale Price Analysis")
@@ -79,17 +80,16 @@ fig.update_layout(
                 dict(count=3, label="3y", step="year", stepmode="backward"),
                 dict(step="all")
             ],
-            # Move the range selector buttons higher by adjusting the 'y' value
-            y=1.05  # Adjusted to move the buttons higher
+            y=1.05
         ),
-        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),  # Set slider background to light grey
+        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),
         type="date"
     ),
-    plot_bgcolor='rgba(211, 211, 211, 0.2)',  # Set chart background to light grey
-    paper_bgcolor='white',  # Keep the area surrounding the chart white
+    plot_bgcolor='rgba(211, 211, 211, 0.2)',
+    paper_bgcolor='white',
     legend=dict(
-        bgcolor='rgba(0,0,0,0)',  # Transparent legend background
-        borderwidth=0  # Remove legend border if desired
+        bgcolor='rgba(0,0,0,0)',
+        borderwidth=0
     ),
     updatemenus=[
         {
@@ -114,7 +114,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.15,
             'xanchor': 'left',
-            'y': 1.15,  # Keep dropdown above the plot
+            'y': 1.15,
             'yanchor': 'top'
         },
         {
@@ -129,7 +129,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.946,
             'xanchor': 'center',
-            'y': 1.15,  # Keep button above the plot
+            'y': 1.15,
             'yanchor': 'top'
         },
         {
@@ -144,29 +144,43 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.33,
             'xanchor': 'center',
-            'y': 1.15,  # Keep button above the plot
+            'y': 1.15,
+            'yanchor': 'top'
+        },
+        # Add a Select/Deselect All button for legend
+        {
+            'buttons': [
+                {
+                    'label': 'Select/Deselect All',
+                    'method': 'relayout',
+                    'args': ['legend.visible', True]  # Toggle legend visibility
+                }
+            ],
+            'type': 'buttons',
+            'x': 0.5,
+            'xanchor': 'center',
+            'y': 1.15,
             'yanchor': 'top'
         }
     ],
     showlegend=True,
     shapes=[
-        # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.55,  # Extend the left boundary
-            'y0': -0.95,  # Extend the bottom boundary
-            'x1': 1.55,   # Extend the right boundary
-            'y1': 1.55,   # Extend the top boundary
+            'x0': -0.55,
+            'y0': -0.95,
+            'x1': 1.55,
+            'y1': 1.55,
             'xref': 'paper',
             'yref': 'paper',
-            'fillcolor': 'rgba(211, 211, 211, 0.14)',  # Very light grey
+            'fillcolor': 'rgba(211, 211, 211, 0.14)',
             'line': {
-                'width': 0  # Border width
+                'width': 0
             },
             'opacity': 1
         }
     ],
-    height=600  # Increase the height of the plot area (height of the plot itself)
+    height=600
 )
 
 # Display the figure in Streamlit
