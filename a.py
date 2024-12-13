@@ -111,7 +111,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.22,
             'xanchor': 'left',
-            'y': 1.16,
+            'y': 1.22,
             'yanchor': 'top'
         },
         {
@@ -126,7 +126,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.887,
             'xanchor': 'center',
-            'y': 1.16,
+            'y': 1.22,
             'yanchor': 'top'
         },
         {
@@ -141,7 +141,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.615,
             'xanchor': 'center',
-            'y': 1.18,
+            'y': 1.22,
             'yanchor': 'top'
         }
     ],
