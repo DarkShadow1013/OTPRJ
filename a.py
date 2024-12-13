@@ -65,7 +65,7 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
         visible=False
     ))
 
-# Update the layout with transparent dropdowns and buttons
+# Update the layout with dropdowns and buttons
 fig.update_layout(
     title='Average Resale Price Over the Years',
     xaxis_title='Month',
@@ -79,7 +79,7 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='rgba(255, 255, 255, 0)'),  # Transparent background
+        rangeslider=dict(visible=True, bgcolor='black'),  # Set slider background to black
         type="date"
     ),
     updatemenus=[
@@ -106,8 +106,7 @@ fig.update_layout(
             'x': 0.22,
             'xanchor': 'left',
             'y': 1.153,
-            'yanchor': 'top',
-            'bgcolor': 'rgba(255, 255, 255, 0)'  # Transparent background
+            'yanchor': 'top'
         },
         {
             'buttons': [
@@ -122,8 +121,7 @@ fig.update_layout(
             'x': 0.887,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top',
-            'bgcolor': 'rgba(255, 255, 255, 0)'  # Transparent background
+            'yanchor': 'top'
         },
         {
             'buttons': [
@@ -138,13 +136,11 @@ fig.update_layout(
             'x': 0.55,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top',
-            'bgcolor': 'rgba(255, 255, 255, 0)'  # Transparent background
+            'yanchor': 'top'
         }
     ],
     showlegend=True
 )
-
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
