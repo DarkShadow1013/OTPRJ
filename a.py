@@ -146,30 +146,6 @@ fig.update_layout(
             'xanchor': 'center',
             'y': 1.15,
             'yanchor': 'top'
-        },
-        # Add a Select/Deselect All button for legend
-        {
-            'buttons': [
-                {
-                    'label': 'Select All',
-                    'method': 'update',
-                    'args': [{'visible': [True] * len(fig.data)},
-                             {'title': '<b>All Data Visible</b>'}]
-                },
-                {
-                    'label': 'Deselect All',
-                    'method': 'update',
-                    'args': [{'visible': [False] * len(fig.data)},
-                             {'title': '<b>No Data Visible</b>'}]
-                }
-            ],
-            'type': 'buttons',
-            'x': 0.85,  # Position on the right
-            'xanchor': 'right',
-            'y': 1.15,
-            'yanchor': 'top',
-            'direction': 'down',
-            'showactive': False
         }
     ],
     showlegend=True,
