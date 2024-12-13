@@ -98,7 +98,7 @@ fig.update_layout(
                     'label': 'All Towns',
                     'method': 'update',
                     'args': [{'visible': [True] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': 'Average Resale Price Over the Years by Town'}]
+                             {'title': '<b>Average Resale Price Over the Years by Town</b>'}]
                 },
                 *[
                     {
@@ -123,7 +123,7 @@ fig.update_layout(
                     'label': 'Show Overall Average',
                     'method': 'update',
                     'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': 'Overall Average Resale Price Over the Years'}]
+                             {'title': '<b>Overall Average Resale Price Over the Years</b>'}]
                 }
             ],
             'type': 'buttons',
@@ -138,7 +138,7 @@ fig.update_layout(
                     'label': 'Flat Types',
                     'method': 'update',
                     'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': 'Average Resale Price by Flat Type'}]
+                             {'title': '<b>Average Resale Price by Flat Type</b>'}]
                 }
             ],
             'type': 'buttons',
