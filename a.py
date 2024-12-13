@@ -121,8 +121,7 @@ fig.update_layout(
             'x': 0.887,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top',
-            'bgcolor': 'rgba(0,0,0,0)'  # Transparent button background
+            'yanchor': 'top' # Transparent button background
         },
         {
             'buttons': [
@@ -137,8 +136,7 @@ fig.update_layout(
             'x': 0.55,
             'xanchor': 'center',
             'y': 1.153,
-            'yanchor': 'top',
-            'bgcolor': 'rgba(0,0,0,0)'  # Transparent button background
+            'yanchor': 'top' # Transparent button background
         }
     ],
     showlegend=True
