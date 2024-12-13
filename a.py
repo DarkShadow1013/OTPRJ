@@ -133,7 +133,7 @@ fig.update_layout(
                 }
             ],
             'type': 'buttons',
-            'x': 0.55,
+            'x': 0.57,
             'xanchor': 'center',
             'y': 1.153,
             'yanchor': 'top'
