@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import gdown
 st.set_page_config(layout="wide")
-
 # Title for the Streamlit app
 st.title("Average Resale Price Analysis")
+
 
 # Instructions
 st.write("""
@@ -68,13 +68,7 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
 
 # Update the layout with dropdowns and buttons
 fig.update_layout(
-    title={
-        'text': 'Average Resale Price Over the Years',  # Title text
-        'x': 0.95,  # Move the title to the right
-        'xanchor': 'right',  # Anchor the title to the right
-        'y': 1.1,  # Move the title upwards
-        'yanchor': 'top'  # Anchor the title to the top
-    },
+    title='Average Resale Price Over the Years',
     xaxis_title='Month',
     yaxis_title='Average Resale Price',
     xaxis=dict(
@@ -85,6 +79,7 @@ fig.update_layout(
                 dict(count=3, label="3y", step="year", stepmode="backward"),
                 dict(step="all")
             ],
+            # Move the range selector buttons higher by adjusting the 'y' value
             y=1.05  # Adjusted to move the buttons higher
         ),
         rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),  # Set slider background to light grey
@@ -155,24 +150,24 @@ fig.update_layout(
     ],
     showlegend=True,
     shapes=[
+        # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.55,
-            'y0': -0.95,
-            'x1': 1.55,
-            'y1': 1.55,
+            'x0': -0.55,  # Extend the left boundary
+            'y0': -0.95,  # Extend the bottom boundary
+            'x1': 1.55,   # Extend the right boundary
+            'y1': 1.55,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
             'fillcolor': 'rgba(211, 211, 211, 0.14)',  # Very light grey
             'line': {
-                'width': 0
+                'width': 0  # Border width
             },
             'opacity': 1
         }
     ],
-    height=600
+    height=600  # Increase the height of the plot area (height of the plot itself)
 )
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
-
