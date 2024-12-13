@@ -111,7 +111,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.22,
             'xanchor': 'left',
-            'y': 0.9,  # Lower the dropdown position
+            'y': 1.22,  # Keep dropdown above the plot
             'yanchor': 'top'
         },
         {
@@ -126,7 +126,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.887,
             'xanchor': 'center',
-            'y': 0.9,  # Lower the button position
+            'y': 1.22,  # Keep button above the plot
             'yanchor': 'top'
         },
         {
@@ -141,7 +141,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.615,
             'xanchor': 'center',
-            'y': 0.9,  # Lower the button position
+            'y': 1.22,  # Keep button above the plot
             'yanchor': 'top'
         }
     ],
@@ -163,7 +163,7 @@ fig.update_layout(
             'opacity': 1
         }
     ],
-    height=700  # Reduce the plot height and make it lower
+    height=600  # Increase the height of the plot area (height of the plot itself)
 )
 
 # Display the figure in Streamlit
