@@ -82,7 +82,7 @@ fig.update_layout(
         rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.6)'),  # Set slider background to light grey
         type="date"
     ),
-    plot_bgcolor='rgba(211, 211, 211, 0.6)',  # Set chart background to light grey
+    plot_bgcolor='rgba(211, 211, 211, 0.2)',  # Set chart background to light grey
     paper_bgcolor='white',  # Keep the area surrounding the chart white
     updatemenus=[
         {
@@ -156,14 +156,7 @@ fig.update_layout(
             'line': {
                 'width': 0
             },
-            'layer': 'below',
-            'opacity': 1,
-            'path': 'M0 0 L1 0 L1 1 L0 1 Z',
-            'transform': {
-                'rotation': 0,
-                'scale': [1, 1],
-                'translate': [0, 0]
-            }
+            'opacity': 1
         }
     ]
 )
