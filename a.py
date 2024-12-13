@@ -79,11 +79,10 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='black'),  # Set slider background to black
+        rangeslider=dict(visible=True, bgcolor='white'),  # Set slider background to black
         type="date"
     ),
     updatemenus=[
-        # Dropdown for towns
         {
             'buttons': [
                 {
@@ -109,7 +108,6 @@ fig.update_layout(
             'y': 1.153,
             'yanchor': 'top'
         },
-        # Button for Overall Average
         {
             'buttons': [
                 {
@@ -125,17 +123,13 @@ fig.update_layout(
             'y': 1.153,
             'yanchor': 'top'
         },
-        # Button for Flat Types with custom styling
         {
             'buttons': [
                 {
                     'label': 'Flat Types',
                     'method': 'update',
                     'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': 'Average Resale Price by Flat Type'}],
-                    'label': 'Flat Types',  # Set button label text
-                    'buttoncolor': 'black',  # Set button background color to black
-                    'font': {'color': 'white'}  # Set text color to white
+                             {'title': 'Average Resale Price by Flat Type'}]
                 }
             ],
             'type': 'buttons',
