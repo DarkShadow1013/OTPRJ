@@ -111,7 +111,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.22,
             'xanchor': 'left',
-            'y': 1.1,  # Lower position for dropdown
+            'y': 0.9,  # Lower the dropdown position
             'yanchor': 'top'
         },
         {
@@ -126,7 +126,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.887,
             'xanchor': 'center',
-            'y': 1.1,  # Lower position for button
+            'y': 0.9,  # Lower the button position
             'yanchor': 'top'
         },
         {
@@ -141,7 +141,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.615,
             'xanchor': 'center',
-            'y': 1.1,  # Lower position for button
+            'y': 0.9,  # Lower the button position
             'yanchor': 'top'
         }
     ],
@@ -163,7 +163,7 @@ fig.update_layout(
             'opacity': 1
         }
     ],
-    height=600  # Make the plot line graph taller
+    height=500  # Reduce the plot height and make it lower
 )
 
 # Display the figure in Streamlit
