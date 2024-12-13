@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import gdown
 st.set_page_config(layout="wide")
+
 # Title for the Streamlit app
 st.title("Average Resale Price Analysis")
-
 
 # Instructions
 st.write("""
@@ -68,7 +68,13 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
 
 # Update the layout with dropdowns and buttons
 fig.update_layout(
-    title='Average Resale Price Over the Years',
+    title={
+        'text': 'Average Resale Price Over the Years',
+        'x': 0.9,  # Move title to the right (0 to 1 scale)
+        'y': 1.1,  # Move title upwards (0 to 1 scale)
+        'xanchor': 'center',  # Center the title horizontally
+        'yanchor': 'top'      # Align title to the top vertically
+    },
     xaxis_title='Month',
     yaxis_title='Average Resale Price',
     xaxis=dict(
@@ -171,3 +177,4 @@ fig.update_layout(
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
+
