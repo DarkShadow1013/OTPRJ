@@ -141,7 +141,31 @@ fig.update_layout(
             'yanchor': 'top'
         }
     ],
-    showlegend=True
+    showlegend=True,
+    shapes=[
+        # Adding a rounded rectangle shape for the entire plot area
+        {
+            'type': 'rect',
+            'x0': 0,
+            'y0': 0,
+            'x1': 1,
+            'y1': 1,
+            'xref': 'paper',
+            'yref': 'paper',
+            'fillcolor': 'rgba(211, 211, 211, 0.2)',  # Very light grey
+            'line': {
+                'width': 0
+            },
+            'layer': 'below',
+            'opacity': 1,
+            'path': 'M0 0 L1 0 L1 1 L0 1 Z',
+            'transform': {
+                'rotation': 0,
+                'scale': [1, 1],
+                'translate': [0, 0]
+            }
+        }
+    ]
 )
 
 # Display the figure in Streamlit
