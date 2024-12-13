@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import gdown
 
 # Title for the Streamlit app
 st.title("Average Resale Price Analysis")
@@ -11,12 +12,15 @@ This app visualizes the average resale price over the years.
 You can filter by towns, view the overall average, or examine trends by flat types.
 """)
 
-# Load the CSV file
+# Load the CSV file from Google Drive
 @st.cache_data
 def load_data():
-    # Replace this URL with the raw CSV file link from your GitHub repo
-    url = "https://raw.githubusercontent.com/your-username/your-repo-name/main/merged_property_data.csv"
-    df = pd.read_csv(url)
+    # Replace <FILE_ID> with your Google Drive file ID
+    file_id = "<FILE_ID>"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    output = "merged_property_data.csv"
+    gdown.download(url, output, quiet=False)
+    df = pd.read_csv(output)
     df['month'] = pd.to_datetime(df['month'], format='%Y-%m')  # Ensure 'month' is datetime
     return df
 
@@ -140,4 +144,3 @@ fig.update_layout(
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
-
