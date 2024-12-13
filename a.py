@@ -84,6 +84,10 @@ fig.update_layout(
     ),
     plot_bgcolor='rgba(211, 211, 211, 0.2)',  # Set chart background to light grey
     paper_bgcolor='white',  # Keep the area surrounding the chart white
+    legend=dict(
+        bgcolor='rgba(0,0,0,0)',  # Transparent legend background
+        borderwidth=0  # Remove legend border if desired
+    ),
     updatemenus=[
         {
             'buttons': [
@@ -146,10 +150,10 @@ fig.update_layout(
         # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.05,  # Extend the left boundary
-            'y0': -0.05,  # Extend the bottom boundary
-            'x1': 1.05,   # Extend the right boundary
-            'y1': 1.05,   # Extend the top boundary
+            'x0': -0.15,  # Extend the left boundary
+            'y0': -0.15,  # Extend the bottom boundary
+            'x1': 1.15,   # Extend the right boundary
+            'y1': 1.15,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
             'fillcolor': 'rgba(211, 211, 211, 0.2)',  # Very light grey
@@ -160,6 +164,7 @@ fig.update_layout(
         }
     ]
 )
+
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
