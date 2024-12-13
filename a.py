@@ -77,7 +77,9 @@ fig.update_layout(
                 dict(count=1, label="1y", step="year", stepmode="backward"),
                 dict(count=3, label="3y", step="year", stepmode="backward"),
                 dict(step="all")
-            ]
+            ],
+            # Move the range selector buttons higher by adjusting the 'y' value
+            y=1.15  # Adjusted to move the buttons higher
         ),
         rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),  # Set slider background to light grey
         type="date"
