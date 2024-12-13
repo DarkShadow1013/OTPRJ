@@ -143,21 +143,65 @@ fig.update_layout(
     ],
     showlegend=True,
     shapes=[
-        # Adding a rounded rectangle shape for the entire plot area, making it bigger
+        # Adding circles in the corners to simulate rounded corners
+        {
+            'type': 'circle',
+            'x0': 0,
+            'y0': 0,
+            'x1': 0.1,
+            'y1': 0.1,
+            'xref': 'paper',
+            'yref': 'paper',
+            'fillcolor': 'rgba(211, 211, 211, 0.2)',
+            'line': {'width': 0},
+        },
+        {
+            'type': 'circle',
+            'x0': 0.9,
+            'y0': 0,
+            'x1': 1,
+            'y1': 0.1,
+            'xref': 'paper',
+            'yref': 'paper',
+            'fillcolor': 'rgba(211, 211, 211, 0.2)',
+            'line': {'width': 0},
+        },
+        {
+            'type': 'circle',
+            'x0': 0,
+            'y0': 0.9,
+            'x1': 0.1,
+            'y1': 1,
+            'xref': 'paper',
+            'yref': 'paper',
+            'fillcolor': 'rgba(211, 211, 211, 0.2)',
+            'line': {'width': 0},
+        },
+        {
+            'type': 'circle',
+            'x0': 0.9,
+            'y0': 0.9,
+            'x1': 1,
+            'y1': 1,
+            'xref': 'paper',
+            'yref': 'paper',
+            'fillcolor': 'rgba(211, 211, 211, 0.2)',
+            'line': {'width': 0},
+        },
+        # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.1,  # Extend the left boundary
-            'y0': -0.1,  # Extend the bottom boundary
-            'x1': 1.1,   # Extend the right boundary
-            'y1': 1.1,   # Extend the top boundary
+            'x0': -0.05,  # Extend the left boundary
+            'y0': -0.05,  # Extend the bottom boundary
+            'x1': 1.05,   # Extend the right boundary
+            'y1': 1.05,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
             'fillcolor': 'rgba(211, 211, 211, 0.2)',  # Very light grey
             'line': {
-                'width': 0
+                'width': 0  # Border width
             },
-            'opacity': 1,
-            'path': 'M 0 0 Q 90 0 10 10 L 10 90 Q 90 100 0 100 L 0 0 Z'  # Rounded corners path
+            'opacity': 1
         }
     ]
 )
