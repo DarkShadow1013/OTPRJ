@@ -156,7 +156,7 @@ fig.update_layout(
             'line': {
                 'width': 0
             },
-            'opacity': 100
+            'opacity': 1
         }
     ]
 )
