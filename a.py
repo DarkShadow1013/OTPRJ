@@ -127,7 +127,7 @@ fig.update_layout(
                 }
             ],
             'type': 'buttons',
-            'x': 0.98,
+            'x': 0.955,
             'xanchor': 'center',
             'y': 1.15,  # Keep button above the plot
             'yanchor': 'top'
