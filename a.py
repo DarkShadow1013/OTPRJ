@@ -150,13 +150,13 @@ fig.update_layout(
         # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.15,  # Extend the left boundary
-            'y0': -0.15,  # Extend the bottom boundary
-            'x1': 1.15,   # Extend the right boundary
-            'y1': 1.15,   # Extend the top boundary
+            'x0': -0.35,  # Extend the left boundary
+            'y0': -0.35,  # Extend the bottom boundary
+            'x1': 1.35,   # Extend the right boundary
+            'y1': 1.35,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
-            'fillcolor': 'rgba(211, 211, 211, 0.2)',  # Very light grey
+            'fillcolor': 'rgba(211, 211, 211, 0.1)',  # Very light grey
             'line': {
                 'width': 0  # Border width
             },
