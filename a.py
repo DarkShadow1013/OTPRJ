@@ -151,7 +151,7 @@ fig.update_layout(
         {
             'type': 'rect',
             'x0': -0.55,  # Extend the left boundary
-            'y0': -0.55,  # Extend the bottom boundary
+            'y0': -0.95,  # Extend the bottom boundary
             'x1': 1.55,   # Extend the right boundary
             'y1': 1.55,   # Extend the top boundary
             'xref': 'paper',
