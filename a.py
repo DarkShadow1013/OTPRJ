@@ -79,7 +79,7 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='black'),  # Set slider background to black
+        rangeslider=dict(visible=True, bgcolor='white'),  # Set slider background to black
         type="date"
     ),
     updatemenus=[
@@ -133,7 +133,7 @@ fig.update_layout(
                 }
             ],
             'type': 'buttons',
-            'x': 0.63,
+            'x': 0.615,
             'xanchor': 'center',
             'y': 1.153,
             'yanchor': 'top'
