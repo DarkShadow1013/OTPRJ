@@ -79,11 +79,11 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='lightgrey'),  # Set slider background to light grey
+        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.6)'),  # Set slider background to light grey
         type="date"
     ),
-    plot_bgcolor='lightgrey',  # Set chart background to light grey
-    paper_bgcolor='lightgrey',  # Set the area surrounding the chart to light grey
+    plot_bgcolor='rgba(211, 211, 211, 0.6)',  # Set chart background to light grey
+    paper_bgcolor='white',  # Keep the area surrounding the chart white
     updatemenus=[
         {
             'buttons': [
