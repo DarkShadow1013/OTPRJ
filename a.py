@@ -163,7 +163,7 @@ fig.update_layout(
             'opacity': 1
         }
     ],
-    height=500  # Reduce the plot height and make it lower
+    height=700  # Reduce the plot height and make it lower
 )
 
 # Display the figure in Streamlit
