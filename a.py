@@ -12,11 +12,12 @@ This app visualizes the average resale price over the years.
 You can filter by towns, view the overall average, or examine trends by flat types.
 """)
 
+
 # Load the CSV file from Google Drive
 @st.cache_data
 def load_data():
     # Replace <FILE_ID> with your Google Drive file ID
-    file_id = "<FILE_ID>"
+    file_id = "1pNq5BS4p17kYWPfFyKcnYGhrVwW5o_LG"
     url = f"https://drive.google.com/uc?id={file_id}"
     output = "merged_property_data.csv"
     gdown.download(url, output, quiet=False)
