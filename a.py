@@ -105,7 +105,7 @@ fig.update_layout(
                         'label': town,
                         'method': 'update',
                         'args': [{'visible': [town == t for t in df_avg_price['town'].unique()] + [False] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                                 {'title': f'Average Resale Price in {town}'}]
+                                 {'title': f'<b>Average Resale Price in {town}</b>'}]
                     }
                     for town in df_avg_price['town'].unique()
                 ]
