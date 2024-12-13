@@ -83,6 +83,7 @@ fig.update_layout(
         type="date"
     ),
     updatemenus=[
+        # Dropdown for towns
         {
             'buttons': [
                 {
@@ -108,6 +109,7 @@ fig.update_layout(
             'y': 1.153,
             'yanchor': 'top'
         },
+        # Button for Overall Average
         {
             'buttons': [
                 {
@@ -123,26 +125,29 @@ fig.update_layout(
             'y': 1.153,
             'yanchor': 'top'
         },
-{
-    'buttons': [
+        # Button for Flat Types with custom styling
         {
-            'label': 'Flat Types',
-            'method': 'update',
-            'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
-                     {'title': 'Average Resale Price by Flat Type'}],
-            'buttoncolor': 'black',  # Set button background color to black
-            'font': {'color': 'white'}  # Set text color to white
+            'buttons': [
+                {
+                    'label': 'Flat Types',
+                    'method': 'update',
+                    'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
+                             {'title': 'Average Resale Price by Flat Type'}],
+                    'label': 'Flat Types',  # Set button label text
+                    'buttoncolor': 'black',  # Set button background color to black
+                    'font': {'color': 'white'}  # Set text color to white
+                }
+            ],
+            'type': 'buttons',
+            'x': 0.615,
+            'xanchor': 'center',
+            'y': 1.153,
+            'yanchor': 'top'
         }
-    ],
-    'type': 'buttons',
-    'x': 0.615,
-    'xanchor': 'center',
-    'y': 1.153,
-    'yanchor': 'top'
-}
     ],
     showlegend=True
 )
+
 
 # Display the figure in Streamlit
 st.plotly_chart(fig)
