@@ -79,7 +79,7 @@ fig.update_layout(
                 dict(step="all")
             ]
         ),
-        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.6)'),  # Set slider background to light grey
+        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),  # Set slider background to light grey
         type="date"
     ),
     plot_bgcolor='rgba(211, 211, 211, 0.2)',  # Set chart background to light grey
@@ -111,7 +111,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.22,
             'xanchor': 'left',
-            'y': 1.153,
+            'y': 1.16,
             'yanchor': 'top'
         },
         {
@@ -126,7 +126,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.887,
             'xanchor': 'center',
-            'y': 1.153,
+            'y': 1.16,
             'yanchor': 'top'
         },
         {
@@ -141,7 +141,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.615,
             'xanchor': 'center',
-            'y': 1.153,
+            'y': 1.16,
             'yanchor': 'top'
         }
     ],
@@ -150,13 +150,13 @@ fig.update_layout(
         # Adding the large rectangle to cover the entire area (not just corners)
         {
             'type': 'rect',
-            'x0': -0.35,  # Extend the left boundary
-            'y0': -0.35,  # Extend the bottom boundary
-            'x1': 1.35,   # Extend the right boundary
-            'y1': 1.35,   # Extend the top boundary
+            'x0': -0.55,  # Extend the left boundary
+            'y0': -0.55,  # Extend the bottom boundary
+            'x1': 1.55,   # Extend the right boundary
+            'y1': 1.55,   # Extend the top boundary
             'xref': 'paper',
             'yref': 'paper',
-            'fillcolor': 'rgba(211, 211, 211, 0.1)',  # Very light grey
+            'fillcolor': 'rgba(211, 211, 211, 0.14)',  # Very light grey
             'line': {
                 'width': 0  # Border width
             },
