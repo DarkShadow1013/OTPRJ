@@ -151,16 +151,25 @@ fig.update_layout(
         {
             'buttons': [
                 {
-                    'label': 'Select/Deselect All',
-                    'method': 'relayout',
-                    'args': ['legend.visible', True]  # Toggle legend visibility
+                    'label': 'Select All',
+                    'method': 'update',
+                    'args': [{'visible': [True] * len(fig.data)},
+                             {'title': '<b>All Data Visible</b>'}]
+                },
+                {
+                    'label': 'Deselect All',
+                    'method': 'update',
+                    'args': [{'visible': [False] * len(fig.data)},
+                             {'title': '<b>No Data Visible</b>'}]
                 }
             ],
             'type': 'buttons',
-            'x': 0.5,
-            'xanchor': 'center',
+            'x': 0.85,  # Position on the right
+            'xanchor': 'right',
             'y': 1.15,
-            'yanchor': 'top'
+            'yanchor': 'top',
+            'direction': 'down',
+            'showactive': False
         }
     ],
     showlegend=True,
