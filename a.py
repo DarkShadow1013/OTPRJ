@@ -113,7 +113,7 @@ fig.update_layout(
             'showactive': True,
             'x': 0.22,
             'xanchor': 'left',
-            'y': 1.22,  # Keep dropdown above the plot
+            'y': 1.15,  # Keep dropdown above the plot
             'yanchor': 'top'
         },
         {
@@ -128,7 +128,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.887,
             'xanchor': 'center',
-            'y': 1.22,  # Keep button above the plot
+            'y': 1.15,  # Keep button above the plot
             'yanchor': 'top'
         },
         {
@@ -143,7 +143,7 @@ fig.update_layout(
             'type': 'buttons',
             'x': 0.615,
             'xanchor': 'center',
-            'y': 1.1,  # Keep button above the plot
+            'y': 1.15,  # Keep button above the plot
             'yanchor': 'top'
         }
     ],
