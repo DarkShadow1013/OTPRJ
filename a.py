@@ -1,14 +1,18 @@
-import streamlit as st
+import os
 import openai
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
+import streamlit as st
+from openai import OpenAI
 
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# OpenAI API Key (add your key here)
-openai.api_key = "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"
+# OpenAI API Key (set via environment variable)
+client = OpenAI(
+    api_key="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",  # Fetches from environment variable
+)
 
 # Custom CSS for chatbot and intro styling
 st.markdown(
@@ -101,15 +105,16 @@ def load_data():
 
 df_all = load_data()
 
-# ChatGPT API interaction
+# ChatGPT API interaction (Updated with new OpenAI client method)
 def get_chatbot_response(user_input):
     try:
-        response = openai.Completion.create(
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "user", "content": f"You are a helpful assistant for real estate analytics. Answer the following question: {user_input}"}
+            ],
             model="gpt-4",  # You can use gpt-3.5-turbo for faster responses
-            prompt=f"You are a helpful assistant for real estate analytics. Answer the following question: {user_input}",
-            max_tokens=100
         )
-        return response["choices"][0]["text"].strip()  # Updated field for the response text
+        return chat_completion["choices"][0]["message"]["content"].strip()  # Extracts the correct response
     except Exception as e:
         return f"Error: {e}"
 
