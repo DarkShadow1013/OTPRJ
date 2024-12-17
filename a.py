@@ -10,14 +10,18 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Sidebar with navigation
+# Sidebar with navigation using buttons
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-section = st.sidebar.button(
-    "Go to Section:",
-    options=["Intro", "Line Chart", "Chatbot"],
-    index=0,
-)
+
+# Define section names
+sections = ["Intro", "Line Chart", "Chatbot"]
+
+# Create buttons for each section and store the selected section
+selected_section = None
+for section_name in sections:
+    if st.sidebar.button(section_name):
+        selected_section = section_name
 
 # Load the CSV file from Google Drive
 @st.cache_data
@@ -38,7 +42,7 @@ df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
 df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
 # Intro Section
-if section == "Intro":
+if selected_section == "Intro":
     st.markdown('<div class="intro-section">', unsafe_allow_html=True)
     st.markdown('<h1 style="font-weight: bold; font-size: 36px;">HDB Analytics Portal</h1>', unsafe_allow_html=True)
     st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
@@ -66,7 +70,7 @@ if section == "Intro":
     """)
 
 # Line Chart Section
-if section == "Line Chart":
+if selected_section == "Line Chart":
     # Create the Plotly figure
     fig = go.Figure()
 
@@ -185,7 +189,7 @@ if section == "Line Chart":
     st.plotly_chart(fig)
 
 # Chatbot Section
-if section == "Chatbot":
+if selected_section == "Chatbot":
     st.title("AI Assistant")
 
     # Initialize session state for storing chat history
