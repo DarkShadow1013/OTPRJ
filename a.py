@@ -124,3 +124,12 @@ st.markdown('<div class="chatbox-body" id="chatbox-body">', unsafe_allow_html=Tr
 # Display chat history
 for chat in st.session_state.chat_history:
     st.markdown(chat, unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+user_input = st.text_input("Type your question:", key="chat_input")
+if user_input:
+    user_response = get_chatbot_response(user_input)
+    st.session_state.chat_history.append(f"**You:** {user_input}<br>**Bot:** {user_response}")
+    st.experimental_rerun()
+
+st.markdown('</div>', unsafe_allow_html=True)
