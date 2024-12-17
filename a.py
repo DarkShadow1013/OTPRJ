@@ -190,7 +190,7 @@ if section == "Line Chart":
                 'type': 'buttons',
                 'x': 0.33,
                 'xanchor': 'center',
-                'y': 1.15,
+                'y': 1.1,
                 'yanchor': 'top'
             }
         ]
