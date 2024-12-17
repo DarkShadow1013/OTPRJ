@@ -8,7 +8,7 @@ import gdown
 st.set_page_config(layout="wide")
 
 # OpenAI API Key (add your key here)
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Custom CSS for chatbot and intro styling
 st.markdown(
