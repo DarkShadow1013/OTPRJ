@@ -190,7 +190,7 @@ if section == "Chatbot":
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant in the real estate industry."}
+                {"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, you work for orangetee as well."}
             ] + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
             [{"role": "user", "content": prompt}],
             max_tokens=150  # Adjust token limit as needed
