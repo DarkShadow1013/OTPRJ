@@ -42,6 +42,11 @@ st.markdown(
         color: #28a745;
         font-weight: bold;
     }
+    .input-area {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
     </style>
     """, unsafe_allow_html=True
 )
@@ -65,8 +70,10 @@ for message in st.session_state.messages[max(0, message_count - max_display):]:
     else:
         st.markdown(f'<div class="message message-ai">{message["content"]}</div>', unsafe_allow_html=True)
 
-# Input for the user's message
-user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about the real estate market...")
+# Input for the user's message outside the scrollable area
+st.markdown('</div>', unsafe_allow_html=True)  # Close the chatbox div
+
+user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about the real estate market...", label_visibility="collapsed")
 
 if st.button("Send Message"):
     if user_input:
@@ -76,10 +83,8 @@ if st.button("Send Message"):
         # Call OpenAI API for response
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # You can adjust to another model if preferred
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant in the real estate industry."},
-                {"role": "user", "content": user_input}
-            ]
+            messages=[{"role": "system", "content": "You are a helpful assistant in the real estate industry."},
+                      {"role": "user", "content": user_input}]
         )
         
         # Extract the assistant's reply from the response
@@ -90,6 +95,3 @@ if st.button("Send Message"):
 
         # Clear the input field and automatically rerun to display the new message
         st.rerun()
-
-
-st.markdown('</div>', unsafe_allow_html=True)
