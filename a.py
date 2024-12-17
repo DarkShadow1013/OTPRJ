@@ -6,7 +6,7 @@ import gdown
 
 
 # Set your OpenAI API key from .env file or directly set it here
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Set wide layout
 st.set_page_config(layout="wide")
