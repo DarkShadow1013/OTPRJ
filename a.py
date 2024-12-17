@@ -189,7 +189,7 @@ if selected_section == "Line Chart":
     st.plotly_chart(fig)
 
 # Chatbot Section
-if selected_section == "Chatbot":
+if section == "Chatbot":
     st.title("AI Assistant")
 
     # Initialize session state for storing chat history
@@ -211,6 +211,8 @@ if selected_section == "Chatbot":
     # Display chat log
     st.markdown("### Chat Log")
     chat_container = st.container()
+
+    # Render the existing chat history
     with chat_container:
         for log in st.session_state.chat_log:
             if log["role"] == "user":
@@ -218,7 +220,7 @@ if selected_section == "Chatbot":
             elif log["role"] == "assistant":
                 st.markdown(f"**Chatbot:** {log['content']}")
 
-    # Input field below chat log
+    # Input field for new messages
     st.markdown("---")
     user_input = st.text_input("Your message", placeholder="Ask me anything about real estate...")
 
@@ -232,5 +234,7 @@ if selected_section == "Chatbot":
             ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Display the updated chat without rerunning the entire page
+            # Instead of rerunning the page, just display the new chat log with the response.
+            # This will update the page smoothly without affecting the sidebar layout.
             st.experimental_rerun()
+
