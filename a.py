@@ -44,8 +44,8 @@ section = st.sidebar.radio(
 # Intro Section
 if section == "Intro":
     st.markdown('<div class="intro-section">', unsafe_allow_html=True)
-    st.markdown('<div class="intro-title">Welcome to the Average Resale Price Dashboard</div>', unsafe_allow_html=True)
-    st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market by towns and flat types.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="intro-title">HDB Analytics Portal</div>', unsafe_allow_html=True)
+    st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
     st.markdown(
         """
         <img src="https://via.placeholder.com/800x400?text=Real+Estate+Dashboard" 
@@ -156,9 +156,9 @@ if section == "Line Chart":
                 ],
                 'direction': 'down',
                 'showactive': True,
-                'x': 0.15,
+                'x': 0.19,
                 'xanchor': 'left',
-                'y': 1.15,
+                'y': 1.11,
                 'yanchor': 'top'
             },
             # Button for overall average
@@ -172,9 +172,9 @@ if section == "Line Chart":
                     }
                 ],
                 'type': 'buttons',
-                'x': 0.946,
+                'x': 0.9,
                 'xanchor': 'center',
-                'y': 1.15,
+                'y': 1.11,
                 'yanchor': 'top'
             },
             # Button for flat types
@@ -188,9 +188,9 @@ if section == "Line Chart":
                     }
                 ],
                 'type': 'buttons',
-                'x': 0.33,
+                'x': 0.43,
                 'xanchor': 'center',
-                'y': 1.15,
+                'y': 1.11,
                 'yanchor': 'top'
             }
         ]
