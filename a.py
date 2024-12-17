@@ -89,6 +89,7 @@ if st.button("Send Message"):
         st.session_state.messages.append({"role": "AI", "content": ai_response})
 
         # Clear the input field and automatically rerun to display the new message
-        st.experimental_rerun()
+        st.rerun()
+
 
 st.markdown('</div>', unsafe_allow_html=True)
