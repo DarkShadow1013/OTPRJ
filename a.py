@@ -213,16 +213,14 @@ if section == "Chatbot":
 
     # Process input when "Send" is pressed
     if st.button("Send"):
-        if user_input:
+        if user_input.strip():
             # Append user message to chat log
-            st.session_state.chat_log.append({"role": "user", "content": user_input})
+            st.session_state.chat_log.append({"role": "user", "content": user_input.strip()})
 
-            # Generate AI response
-            ai_response = chatbot(user_input)
-
-            # Append AI response to chat log
+            # Generate AI response and append it to chat log
+            ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Clear the input field after processing
-            st.experimental_set_query_params()  # Update URL state if needed
-
+            # Clear the input field for the next message
+            st.set_query_params()  # Ensure backward compatibility with latest Streamlit versions
+            st.experimental_rerun()  # Immediately rerun the app to show updates
