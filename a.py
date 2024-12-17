@@ -178,33 +178,30 @@ if section == "Line Chart":
     # Display the plot
     st.plotly_chart(fig)
 
-# Chatbot Section
 if section == "Chatbot":
     st.title("AI Assistant")
 
-    # Initialize session state for messages
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    # Display chat history
-    for message in st.session_state.messages:
-        st.write(f"**{message['role']}**: {message['content']}")
+    # Function to generate a response from the chatbot
+    def chatbot(prompt):
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant in the real estate industry."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=150  # Adjust token limit as needed
+        )
+        return response['choices'][0]['message']['content'].strip()
 
     # Input for user's message
-    user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about real estate...")
+    user_input = st.text_input("Your message", placeholder="Ask me anything about real estate...")
 
     if st.button("Send"):
         if user_input:
-            # Add user input to chat history
-            st.session_state.messages.append({"role": "User", "content": user_input})
+            # Get response from the chatbot
+            ai_response = chatbot(user_input)
+            
+            # Display the conversation
+            st.markdown(f"**You:** {user_input}")
+            st.markdown(f"**Chatbot:** {ai_response}")
 
-            # Get response from OpenAI
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "system", "content": "You are a helpful assistant in the real estate industry."}] +
-                [{"role": msg["role"], "content": msg["content"]} for msg in st.session_state.messages]
-            )
-
-            # Extract and store the AI's reply
-            ai_response = response['choices'][0]['message']['content']
-            st.session_state.messages.append({"role": "AI", "content": ai_response})
