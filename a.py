@@ -10,18 +10,14 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Sidebar with navigation using buttons
+# Sidebar with navigation
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-
-# Define section names
-sections = ["Intro", "Line Chart", "Chatbot"]
-
-# Create buttons for each section and store the selected section
-selected_section = None
-for section_name in sections:
-    if st.sidebar.button(section_name):
-        selected_section = section_name
+section = st.sidebar.radio(
+    "Go to Section:",
+    options=["Intro", "Line Chart", "Chatbot"],
+    index=0,
+)
 
 # Load the CSV file from Google Drive
 @st.cache_data
@@ -42,7 +38,7 @@ df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
 df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
 # Intro Section
-if selected_section == "Intro":
+if section == "Intro":
     st.markdown('<div class="intro-section">', unsafe_allow_html=True)
     st.markdown('<h1 style="font-weight: bold; font-size: 36px;">HDB Analytics Portal</h1>', unsafe_allow_html=True)
     st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
@@ -70,7 +66,7 @@ if selected_section == "Intro":
     """)
 
 # Line Chart Section
-if selected_section == "Line Chart":
+if section == "Line Chart":
     # Create the Plotly figure
     fig = go.Figure()
 
@@ -189,7 +185,7 @@ if selected_section == "Line Chart":
     st.plotly_chart(fig)
 
 # Chatbot Section
-if selected_section == "Chatbot":
+if section == "Chatbot":
     st.title("AI Assistant")
 
     # Initialize session state for storing chat history
@@ -200,8 +196,9 @@ if selected_section == "Chatbot":
     def chatbot(prompt):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, you work for orangetee as well."}]
-            + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, you work for orangetee as well."}
+            ] + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
             [{"role": "user", "content": prompt}],
             max_tokens=150  # Adjust token limit as needed
         )
@@ -210,8 +207,6 @@ if selected_section == "Chatbot":
     # Display chat log
     st.markdown("### Chat Log")
     chat_container = st.container()
-
-    # Render the existing chat history
     with chat_container:
         for log in st.session_state.chat_log:
             if log["role"] == "user":
@@ -219,7 +214,7 @@ if selected_section == "Chatbot":
             elif log["role"] == "assistant":
                 st.markdown(f"**Chatbot:** {log['content']}")
 
-    # Input field for new messages
+    # Input field below chat log
     st.markdown("---")
     user_input = st.text_input("Your message", placeholder="Ask me anything about real estate...")
 
@@ -233,6 +228,5 @@ if selected_section == "Chatbot":
             ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Refresh the chat section by rerunning the app without resetting the entire page
-            st.experimental_rerun()  # Only rerun the chat section without affecting the rest of the app
-
+            # Display the updated chat without rerunning the entire page
+            st.experimental_rerun()
