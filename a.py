@@ -222,5 +222,5 @@ if section == "Chatbot":
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
             # Clear the input field for the next message
-            st.set_query_params()  # Ensure backward compatibility with latest Streamlit versions
+             # Ensure backward compatibility with latest Streamlit versions
             st.experimental_rerun()  # Immediately rerun the app to show updates
