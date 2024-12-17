@@ -45,7 +45,7 @@ if section == "Intro":
     st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
     st.markdown(
         """
-        <img src="https://via.placeholder.com/800x400?text=Real+Estate+Dashboard" 
+        <img src="https://www.scnsoft.com/data-analytics/real-estate-data-analytics/real-estate-analytics_cover-01.svg" 
              alt="Dashboard Overview" 
              style="display: block; margin: 20px auto; width: 50%; border-radius: 10px;">
         """,
