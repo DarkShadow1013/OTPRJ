@@ -10,23 +10,14 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Sidebar with navigation as buttons
+# Sidebar with navigation
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-
-# Create buttons for navigation
-button_intro = st.sidebar.button("Intro")
-button_line_chart = st.sidebar.button("Line Chart")
-button_chatbot = st.sidebar.button("Chatbot")
-
-# Set the section based on button clicks
-section = None
-if button_intro:
-    section = "Intro"
-elif button_line_chart:
-    section = "Line Chart"
-elif button_chatbot:
-    section = "Chatbot"
+section = st.sidebar.radio(
+    "Go to Section:",
+    options=["Intro", "Line Chart", "Chatbot"],
+    index=0,
+)
 
 # Load the CSV file from Google Drive
 @st.cache_data
@@ -60,7 +51,6 @@ if section == "Intro":
         unsafe_allow_html=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
-
     st.write("""
     **HDB Analytics Portal:**
     
@@ -194,6 +184,7 @@ if section == "Line Chart":
     # Display the plot
     st.plotly_chart(fig)
 
+# Chatbot Section
 if section == "Chatbot":
     st.title("AI Assistant")
 
@@ -237,5 +228,5 @@ if section == "Chatbot":
             ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Clear the input field for the next message
-            st.rerun()  # Immediately rerun the app to show updates
+            # Display the updated chat without rerunning the entire page
+            st.experimental_rerun()
