@@ -90,7 +90,7 @@ if section == "Intro":
     - Click on legend items to toggle visibility of traces.
     """)
 
-    # Chatbot Section
+# Chatbot Section
     st.markdown('<div class="chatbox">', unsafe_allow_html=True)
     st.markdown('<div class="chatbox-title">Chat with our AI Assistant</div>', unsafe_allow_html=True)
     
@@ -124,9 +124,6 @@ if section == "Intro":
             
             # Add AI response to chat history
             st.session_state.messages.append({"role": "AI", "content": ai_response})
-            
-            # Clear the input field
-            st.experimental_rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
 
