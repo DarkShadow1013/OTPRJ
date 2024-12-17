@@ -27,27 +27,22 @@ st.markdown(
         margin-top: 10px;
         color: #666; /* Medium gray color */
     }
-    .center-image {
-        display: block;
-        margin: 20px auto;
-        width: 50%;
-        border-radius: 10px;
-    }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Intro section
+# Intro section with fixed image handling
 st.markdown('<div class="intro-section">', unsafe_allow_html=True)
 st.markdown('<div class="intro-title">Welcome to the Average Resale Price Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market by towns and flat types.</div>', unsafe_allow_html=True)
-st.image(
-    "https://www.orangetee.com/newsroom/Newsroom/2024/20240319105913-OT%20Logo%20For%20Press%20Release.jpg",  # Replace with your image URL
-    caption="Singapore Real Estate Analysis",
-    use_column_width=True,
-    output_format="auto",
-    classes="center-image"
+st.markdown(
+    """
+    <img src="https://via.placeholder.com/800x400?text=Real+Estate+Dashboard" 
+         alt="Dashboard Overview" 
+         style="display: block; margin: 20px auto; width: 50%; border-radius: 10px;">
+    """,
+    unsafe_allow_html=True
 )
 st.markdown('</div>', unsafe_allow_html=True)
 
