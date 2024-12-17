@@ -3,7 +3,7 @@ import openai
 
 # Streamlit layout settings
 st.set_page_config(layout="wide")
-openai.api_key = "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"  # Assuming you're using secrets management for safety
+openai.api_key = "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"  # Assuming you're using secrets management for safety
 
 # Custom CSS for chatbox
 st.markdown(
