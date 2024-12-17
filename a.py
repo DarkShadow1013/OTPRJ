@@ -1,70 +1,31 @@
-import os
-import openai
+import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
-import streamlit as st
-from openai import OpenAI
 
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# OpenAI API Key (set via environment variable)
-client = OpenAI(
-    api_key="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",  # Fetches from environment variable
-)
-
-# Custom CSS for chatbot and intro styling
+# Custom CSS for intro styling
 st.markdown(
     """
     <style>
-    .chatbox-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 350px;
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-        padding: 10px;
-        z-index: 1000;
-    }
-    .chatbox-header {
-        background-color: #007BFF;
-        color: white;
-        padding: 10px;
-        font-weight: bold;
+    .intro-section {
+        background-color: #f5f5f5; /* Light gray background */
+        padding: 50px;
         text-align: center;
-        border-radius: 10px 10px 0 0;
+        margin-bottom: 50px;
+        border-radius: 10px;
     }
-    .chatbox-body {
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 10px;
-        font-size: 14px;
+    .intro-title {
+        font-size: 3em;
+        font-weight: bold;
+        color: #333; /* Dark text color */
     }
-    .chatbox-input {
-        display: flex;
+    .intro-subtitle {
+        font-size: 1.5em;
         margin-top: 10px;
-    }
-    .chatbox-input input {
-        flex: 1;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
-    }
-    .chatbox-input button {
-        margin-left: 10px;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-    .chatbox-input button:hover {
-        background-color: #0056b3;
+        color: #666; /* Medium gray color */
     }
     </style>
     """,
@@ -83,8 +44,17 @@ section = st.sidebar.radio(
 # Intro Section
 if section == "Intro":
     st.markdown('<div class="intro-section">', unsafe_allow_html=True)
-    st.markdown('<div class="intro-title">HDB Analytics Portal</div>', unsafe_allow_html=True)
-    st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="intro-title">Welcome to the Average Resale Price Dashboard</div>', unsafe_allow_html=True)
+    st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market by towns and flat types.</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <img src="https://via.placeholder.com/800x400?text=Real+Estate+Dashboard" 
+             alt="Dashboard Overview" 
+             style="display: block; margin: 20px auto; width: 50%; border-radius: 10px;">
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown('</div>', unsafe_allow_html=True)
     st.write("""
     **How to use this dashboard:**
     - Scroll down to see the interactive chart.
@@ -105,36 +75,135 @@ def load_data():
 
 df_all = load_data()
 
-# ChatGPT API interaction (Updated with new OpenAI client method)
-def get_chatbot_response(user_input):
-    try:
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {"role": "user", "content": f"You are a helpful assistant for real estate analytics. Answer the following question: {user_input}"}
-            ],
-            model="gpt-4",  # You can use gpt-3.5-turbo for faster responses
-        )
-        return chat_completion["choices"][0]["message"]["content"].strip()  # Extracts the correct response
-    except Exception as e:
-        return f"Error: {e}"
+# Data preparation
+df_avg_price = df_all.groupby(['month', 'town'], as_index=False)['resale_price'].mean()
+df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
+df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
-# Persistent Chatbot
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+# Line Chart Section
+if section == "Line Chart":
+    # Create the Plotly figure
+    fig = go.Figure()
 
-st.markdown('<div class="chatbox-container">', unsafe_allow_html=True)
-st.markdown('<div class="chatbox-header">Chatbot Assistant</div>', unsafe_allow_html=True)
-st.markdown('<div class="chatbox-body" id="chatbox-body">', unsafe_allow_html=True)
+    # Add traces for towns
+    for town in df_avg_price['town'].unique():
+        town_data = df_avg_price[df_avg_price['town'] == town]
+        fig.add_trace(go.Scatter(
+            x=town_data['month'],
+            y=town_data['resale_price'],
+            mode='lines',
+            name=town,
+            visible=True  # Default visible for towns
+        ))
 
-# Display chat history
-for chat in st.session_state.chat_history:
-    st.markdown(chat, unsafe_allow_html=True)
+    # Add a trace for overall average
+    fig.add_trace(go.Scatter(
+        x=df_monthly_avg['month'],
+        y=df_monthly_avg['resale_price'],
+        mode='lines',
+        name='Overall Average',
+        visible=True
+    ))
 
-st.markdown('</div>', unsafe_allow_html=True)
-user_input = st.text_input("Type your question:", key="chat_input")
-if user_input:
-    user_response = get_chatbot_response(user_input)
-    st.session_state.chat_history.append(f"**You:** {user_input}<br>**Bot:** {user_response}")
-    st.experimental_rerun()
+    # Add traces for flat types (initially hidden)
+    for flat_type in df_flat_type_avg['flat_type'].unique():
+        flat_type_data = df_flat_type_avg[df_flat_type_avg['flat_type'] == flat_type]
+        fig.add_trace(go.Scatter(
+            x=flat_type_data['month'],
+            y=flat_type_data['resale_price'],
+            mode='lines',
+            name=flat_type,
+            visible=False
+        ))
 
-st.markdown('</div>', unsafe_allow_html=True)
+    # Add range selector buttons (e.g., 6m, 1y, etc.)
+    fig.update_layout(
+        title_text='<b>Average Resale Price Over the Years</b>',
+        xaxis_title='Month',
+        yaxis_title='Average Resale Price',
+        xaxis=dict(
+            rangeslider=dict(visible=True),
+            rangeselector=dict(
+                buttons=[
+                    dict(count=6, label="6m", step="month", stepmode="backward"),
+                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                    dict(count=2, label="2y", step="year", stepmode="backward"),
+                    dict(step="all", label="All")
+                ]
+            ),
+            type="date"
+        ),
+        height=600,
+        updatemenus=[
+            # Dropdown for towns
+            {
+                'buttons': [
+                    {
+                        'label': 'All Towns',
+                        'method': 'update',
+                        'args': [{'visible': [True] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                                 {'title': '<b>Average Resale Price Over the Years by Town</b>'}]
+                    },
+                    *[
+                        {
+                            'label': town,
+                            'method': 'update',
+                            'args': [{'visible': [town == t for t in df_avg_price['town'].unique()] + [False] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                                     {'title': f'<b>Average Resale Price in {town}</b>'}]
+                        }
+                        for town in df_avg_price['town'].unique()
+                    ]
+                ],
+                'direction': 'down',
+                'showactive': True,
+                'x': 0.15,
+                'xanchor': 'left',
+                'y': 1.15,
+                'yanchor': 'top'
+            },
+            # Button for overall average
+            {
+                'buttons': [
+                    {
+                        'label': 'Show Overall Average',
+                        'method': 'update',
+                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                                 {'title': '<b>Overall Average Resale Price Over the Years</b>'}]
+                    }
+                ],
+                'type': 'buttons',
+                'x': 0.946,
+                'xanchor': 'center',
+                'y': 1.15,
+                'yanchor': 'top'
+            },
+            # Button for flat types
+            {
+                'buttons': [
+                    {
+                        'label': 'Flat Types',
+                        'method': 'update',
+                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
+                                 {'title': '<b>Average Resale Price by Flat Type</b>'}]
+                    }
+                ],
+                'type': 'buttons',
+                'x': 0.33,
+                'xanchor': 'center',
+                'y': 1.15,
+                'yanchor': 'top'
+            }
+        ]
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+# Price Calculator Section
+if section == "Price Calculator":
+    st.write("### Price Calculator (Coming Soon)")
+    st.write("This section will allow you to estimate flat resale prices based on input parameters.")
+
+# Price Forecaster Section
+if section == "Price Forecaster":
+    st.write("### Price Forecaster (Coming Soon)")
+    st.write("This section will forecast future resale prices using historical trends.")
