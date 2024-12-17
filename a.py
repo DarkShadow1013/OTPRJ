@@ -181,27 +181,47 @@ if section == "Line Chart":
 if section == "Chatbot":
     st.title("AI Assistant")
 
+    # Initialize session state for storing chat history
+    if "chat_log" not in st.session_state:
+        st.session_state.chat_log = []
+
     # Function to generate a response from the chatbot
     def chatbot(prompt):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant in the real estate industry."},
-                {"role": "user", "content": prompt}
-            ],
+                {"role": "system", "content": "You are a helpful assistant in the real estate industry."}
+            ] + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
+            [{"role": "user", "content": prompt}],
             max_tokens=150  # Adjust token limit as needed
         )
         return response['choices'][0]['message']['content'].strip()
 
-    # Input for user's message
+    # Display chat log
+    st.markdown("### Chat Log")
+    chat_container = st.container()
+    with chat_container:
+        for log in st.session_state.chat_log:
+            if log["role"] == "user":
+                st.markdown(f"**You:** {log['content']}")
+            elif log["role"] == "assistant":
+                st.markdown(f"**Chatbot:** {log['content']}")
+
+    # Input field below chat log
+    st.markdown("---")
     user_input = st.text_input("Your message", placeholder="Ask me anything about real estate...")
 
     if st.button("Send"):
         if user_input:
-            # Get response from the chatbot
+            # Append user message to chat log
+            st.session_state.chat_log.append({"role": "user", "content": user_input})
+
+            # Generate AI response
             ai_response = chatbot(user_input)
-            
-            # Display the conversation
-            st.markdown(f"**You:** {user_input}")
-            st.markdown(f"**Chatbot:** {ai_response}")
+
+            # Append AI response to chat log
+            st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
+
+            # Refresh the page to show the updated chat log
+            st.experimental_rerun()
 
