@@ -6,68 +6,37 @@ import gdown
 
 
 # Set your OpenAI API key from .env file or directly set it here
-openai.api_key = "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"  # Assuming you're using secrets management for safety
+openai.api_key = "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"
 
 # Set wide layout
 st.set_page_config(layout="wide")
-
-# Custom CSS for intro styling
-st.markdown(
-    """
-    <style>
-    .intro-section {
-        background-color: #f5f5f5; /* Light gray background */
-        padding: 50px;
-        text-align: center;
-        margin-bottom: 50px;
-        border-radius: 10px;
-    }
-    .intro-title {
-        font-size: 3em;
-        font-weight: bold;
-        color: #333; /* Dark text color */
-    }
-    .intro-subtitle {
-        font-size: 1.5em;
-        margin-top: 10px;
-        color: #666; /* Medium gray color */
-    }
-    .chatbox {
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .chatbox-title {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-    .chatbox-messages {
-        max-height: 300px;
-        overflow-y: auto;
-        margin-bottom: 10px;
-    }
-    .chatbox-input {
-        width: 100%;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # Sidebar with navigation
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
 section = st.sidebar.radio(
     "Go to Section:",
-    options=["Intro", "Line Chart", "Price Calculator", "Price Forecaster"],
+    options=["Intro", "Line Chart", "Chatbot"],
     index=0,
 )
+
+# Load the CSV file from Google Drive
+@st.cache_data
+def load_data():
+    file_id = "1pNq5BS4p17kYWPfFyKcnYGhrVwW5o_LG"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    output = "merged_property_data.csv"
+    gdown.download(url, output, quiet=False)
+    df = pd.read_csv(output)
+    df['month'] = pd.to_datetime(df['month'], format='%Y-%m')  # Ensure 'month' is datetime
+    return df
+
+df_all = load_data()
+
+# Data preparation
+df_avg_price = df_all.groupby(['month', 'town'], as_index=False)['resale_price'].mean()
+df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
+df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
 # Intro Section
 if section == "Intro":
@@ -89,61 +58,6 @@ if section == "Intro":
     - Use dropdowns and buttons to filter by towns or flat types.
     - Click on legend items to toggle visibility of traces.
     """)
-
-# Chatbot Section
-    st.markdown('<div class="chatbox">', unsafe_allow_html=True)
-    st.markdown('<div class="chatbox-title">Chat with our AI Assistant</div>', unsafe_allow_html=True)
-    
-    # Display chat history
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    # Display past messages
-    for message in st.session_state.messages:
-        st.write(f"**{message['role']}**: {message['content']}")
-    
-    # Input for user's message
-    user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about the real estate market...")
-
-    if st.button("Send Message"):
-        if user_input:
-            # Add user message to chat history
-            st.session_state.messages.append({"role": "User", "content": user_input})
-            
-            # Call OpenAI API for response
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  # You can adjust to another model if preferred
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant in the real estate industry."},
-                    {"role": "user", "content": user_input}
-                ]
-            )
-            
-            # Extract the assistant's reply from the response
-            ai_response = response['choices'][0]['message']['content']
-            
-            # Add AI response to chat history
-            st.session_state.messages.append({"role": "AI", "content": ai_response})
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Load the CSV file from Google Drive
-@st.cache_data
-def load_data():
-    file_id = "1pNq5BS4p17kYWPfFyKcnYGhrVwW5o_LG"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    output = "merged_property_data.csv"
-    gdown.download(url, output, quiet=False)
-    df = pd.read_csv(output)
-    df['month'] = pd.to_datetime(df['month'], format='%Y-%m')  # Ensure 'month' is datetime
-    return df
-
-df_all = load_data()
-
-# Data preparation
-df_avg_price = df_all.groupby(['month', 'town'], as_index=False)['resale_price'].mean()
-df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
-df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
 # Line Chart Section
 if section == "Line Chart":
@@ -263,3 +177,34 @@ if section == "Line Chart":
 
     # Display the plot
     st.plotly_chart(fig)
+
+# Chatbot Section
+if section == "Chatbot":
+    st.title("AI Assistant")
+
+    # Initialize session state for messages
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # Display chat history
+    for message in st.session_state.messages:
+        st.write(f"**{message['role']}**: {message['content']}")
+
+    # Input for user's message
+    user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about real estate...")
+
+    if st.button("Send"):
+        if user_input:
+            # Add user input to chat history
+            st.session_state.messages.append({"role": "User", "content": user_input})
+
+            # Get response from OpenAI
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "system", "content": "You are a helpful assistant in the real estate industry."}] +
+                [{"role": msg["role"], "content": msg["content"]} for msg in st.session_state.messages]
+            )
+
+            # Extract and store the AI's reply
+            ai_response = response['choices'][0]['message']['content']
+            st.session_state.messages.append({"role": "AI", "content": ai_response})
