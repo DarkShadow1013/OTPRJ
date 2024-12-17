@@ -6,7 +6,7 @@ import gdown
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Custom CSS for intro styling
+# Custom CSS for styling
 st.markdown(
     """
     <style>
@@ -27,7 +27,94 @@ st.markdown(
         margin-top: 10px;
         color: #666; /* Medium gray color */
     }
+    .chatbox-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        height: 400px;
+        z-index: 1000;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    }
+    .chatbox-header {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .chatbox-body {
+        padding: 10px;
+        height: 300px;
+        overflow-y: auto;
+        font-size: 0.9em;
+    }
+    .chatbox-input {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ddd;
+    }
+    .chatbox-input textarea {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        resize: none;
+    }
+    .chatbox-input button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
     </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Chatbox HTML and JavaScript
+st.markdown(
+    """
+    <div class="chatbox-container" id="chatbox">
+        <div class="chatbox-header">AI Chatbot</div>
+        <div class="chatbox-body" id="chatbox-body">
+            <p><strong>Chatbot:</strong> Hello! How can I assist you?</p>
+        </div>
+        <div class="chatbox-input">
+            <textarea id="chat-input" placeholder="Type your message here..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+    const chatboxBody = document.getElementById('chatbox-body');
+    const chatInput = document.getElementById('chat-input');
+    function sendMessage() {
+        const userMessage = chatInput.value;
+        if (userMessage.trim()) {
+            const userMessageElement = document.createElement('p');
+            userMessageElement.innerHTML = '<strong>You:</strong> ' + userMessage;
+            chatboxBody.appendChild(userMessageElement);
+            chatboxBody.scrollTop = chatboxBody.scrollHeight;
+            chatInput.value = '';
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessageElement = document.createElement('p');
+                botMessageElement.innerHTML = '<strong>Chatbot:</strong> ' + data.response;
+                chatboxBody.appendChild(botMessageElement);
+                chatboxBody.scrollTop = chatboxBody.scrollHeight;
+            });
+        }
+    }
+    </script>
     """,
     unsafe_allow_html=True,
 )
@@ -133,67 +220,7 @@ if section == "Line Chart":
             ),
             type="date"
         ),
-        height=600,
-        updatemenus=[
-            # Dropdown for towns
-            {
-                'buttons': [
-                    {
-                        'label': 'All Towns',
-                        'method': 'update',
-                        'args': [{'visible': [True] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                                 {'title': '<b>Average Resale Price Over the Years by Town</b>'}]
-                    },
-                    *[
-                        {
-                            'label': town,
-                            'method': 'update',
-                            'args': [{'visible': [town == t for t in df_avg_price['town'].unique()] + [False] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                                     {'title': f'<b>Average Resale Price in {town}</b>'}]
-                        }
-                        for town in df_avg_price['town'].unique()
-                    ]
-                ],
-                'direction': 'down',
-                'showactive': True,
-                'x': 0.19,
-                'xanchor': 'left',
-                'y': 1.11,
-                'yanchor': 'top'
-            },
-            # Button for overall average
-            {
-                'buttons': [
-                    {
-                        'label': 'Show Overall Average',
-                        'method': 'update',
-                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                                 {'title': '<b>Overall Average Resale Price Over the Years</b>'}]
-                    }
-                ],
-                'type': 'buttons',
-                'x': 0.9,
-                'xanchor': 'center',
-                'y': 1.11,
-                'yanchor': 'top'
-            },
-            # Button for flat types
-            {
-                'buttons': [
-                    {
-                        'label': 'Flat Types',
-                        'method': 'update',
-                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
-                                 {'title': '<b>Average Resale Price by Flat Type</b>'}]
-                    }
-                ],
-                'type': 'buttons',
-                'x': 0.43,
-                'xanchor': 'center',
-                'y': 1.11,
-                'yanchor': 'top'
-            }
-        ]
+        height=600
     )
 
     st.plotly_chart(fig, use_container_width=True)
