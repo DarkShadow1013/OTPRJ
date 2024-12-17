@@ -2,4 +2,5 @@ streamlit
 pandas
 plotly
 gdown
-openai
+openai>=1.0.0
+
