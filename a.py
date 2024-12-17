@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import gdown
 
+
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = st.secrets["openai"]["api_key"]
 
@@ -51,19 +52,19 @@ if section == "Intro":
         unsafe_allow_html=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
-    st.write("""
-    **HDB Analytics Portal:**
-    
-    - **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
-    
-    - **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
-    
-    - **Customizable Filters:** Customize your search based on room types, price range, and amenities, with real-time updates as you adjust the filters.
-    
-    - **Insights & Reports:** Access detailed insights and reports to support your decision-making process. The portal provides up-to-date property market trends and analytics for a comprehensive view.
-    
-    - **Real-Time Updates:** Stay informed with the latest data, refreshed regularly to ensure accurate and current property information.
-    """)
+st.write("""
+**HDB Analytics Portal:**
+
+- **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
+
+- **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
+
+- **Customizable Filters:** Customize your search based on room types, price range, and amenities, with real-time updates as you adjust the filters.
+
+- **Insights & Reports:** Access detailed insights and reports to support your decision-making process. The portal provides up-to-date property market trends and analytics for a comprehensive view.
+
+- **Real-Time Updates:** Stay informed with the latest data, refreshed regularly to ensure accurate and current property information.
+""")
 
 # Line Chart Section
 if section == "Line Chart":
@@ -184,7 +185,6 @@ if section == "Line Chart":
     # Display the plot
     st.plotly_chart(fig)
 
-# Chatbot Section
 if section == "Chatbot":
     st.title("AI Assistant")
 
@@ -228,5 +228,5 @@ if section == "Chatbot":
             ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Display the updated chat without rerunning the entire page
-            st.experimental_rerun()
+            # Clear the input field for the next message
+            st.rerun()  # Immediately rerun the app to show updates
