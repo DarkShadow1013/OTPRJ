@@ -105,7 +105,7 @@ df_all = load_data()
 def get_chatbot_response(user_input):
     try:
         response = openai.Completion.create(
-            model="gpt-3.5",  # You can use gpt-3.5-turbo for faster responses
+            model="gpt-3.5-turbo",  # You can use gpt-3.5-turbo for faster responses
             prompt=f"You are a helpful assistant for real estate analytics. Answer the following question: {user_input}",
             max_tokens=100
         )
