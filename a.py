@@ -52,12 +52,23 @@ if section == "Intro":
         unsafe_allow_html=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
-    st.write("""
-    **How to use this dashboard:**
-    - Scroll down to see the interactive chart.
-    - Use dropdowns and buttons to filter by towns or flat types.
-    - Click on legend items to toggle visibility of traces.
-    """)
+st.write("""
+**HDB Analytics Portal:**
+
+- **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
+
+- **User-Friendly Interface:** Easily navigate through the various features, including property search filters, interactive maps, and detailed property statistics, all in one place.
+
+- **Interactive Search:** Use the interactive map to search for properties by town, flat type, and other filters such as Minimum Occupation Period (MOP) or Temporary Occupation Period (TOP).
+
+- **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
+
+- **Customizable Filters:** Customize your search based on room types, price range, and amenities, with real-time updates as you adjust the filters.
+
+- **Insights & Reports:** Access detailed insights and reports to support your decision-making process. The portal provides up-to-date property market trends and analytics for a comprehensive view.
+
+- **Real-Time Updates:** Stay informed with the latest data, refreshed regularly to ensure accurate and current property information.
+""")
 
 # Line Chart Section
 if section == "Line Chart":
