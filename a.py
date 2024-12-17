@@ -3,10 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
-from dotenv import load_dotenv
 
-# Load environment variables from the .env file (for storing your API key securely)
-load_dotenv()
 
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = "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"  # Assuming you're using secrets management for safety
