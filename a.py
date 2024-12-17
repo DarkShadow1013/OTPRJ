@@ -211,6 +211,7 @@ if section == "Chatbot":
     st.markdown("---")
     user_input = st.text_input("Your message", placeholder="Ask me anything about real estate...")
 
+    # Process input when "Send" is pressed
     if st.button("Send"):
         if user_input:
             # Append user message to chat log
@@ -222,6 +223,6 @@ if section == "Chatbot":
             # Append AI response to chat log
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Refresh the page to show the updated chat log
-            st.experimental_rerun()
+            # Clear the input field after processing
+            st.experimental_set_query_params()  # Update URL state if needed
 
