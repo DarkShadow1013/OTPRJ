@@ -156,7 +156,7 @@ if section == "Line Chart":
                 ],
                 'direction': 'down',
                 'showactive': True,
-                'x': 0.22,
+                'x': 0.19,
                 'xanchor': 'left',
                 'y': 1.11,
                 'yanchor': 'top'
