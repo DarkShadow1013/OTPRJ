@@ -2,7 +2,7 @@ import openai
 import streamlit as st
 
 # OpenAI API Key (add your key here)
-openai.api_key = "your-openai-api-key-here"
+openai.api_key = "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"
 
 # ChatGPT API interaction
 def get_chatbot_response(user_input):
