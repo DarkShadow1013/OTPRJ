@@ -4,21 +4,29 @@ import pandas as pd
 import plotly.graph_objects as go
 import gdown
 
-
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = st.secrets["openai"]["api_key"]
 
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Sidebar with navigation
+# Sidebar with navigation as buttons
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-section = st.sidebar.radio(
-    "Go to Section:",
-    options=["Intro", "Line Chart", "Chatbot"],
-    index=0,
-)
+
+# Create buttons for navigation
+button_intro = st.sidebar.button("Intro")
+button_line_chart = st.sidebar.button("Line Chart")
+button_chatbot = st.sidebar.button("Chatbot")
+
+# Set the section based on button clicks
+section = None
+if button_intro:
+    section = "Intro"
+elif button_line_chart:
+    section = "Line Chart"
+elif button_chatbot:
+    section = "Chatbot"
 
 # Load the CSV file from Google Drive
 @st.cache_data
@@ -52,14 +60,11 @@ if section == "Intro":
         unsafe_allow_html=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
+
 st.write("""
 **HDB Analytics Portal:**
 
 - **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
-
-- **User-Friendly Interface:** Easily navigate through the various features, including property search filters, interactive maps, and detailed property statistics, all in one place.
-
-- **Interactive Search:** Use the interactive map to search for properties by town, flat type, and other filters such as Minimum Occupation Period (MOP) or Temporary Occupation Period (TOP).
 
 - **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
 
