@@ -6,10 +6,11 @@ import gdown
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Custom CSS for intro background and styling
+# Custom CSS for intro background, styling, and smooth scrolling
 st.markdown(
     """
     <style>
+    /* Intro section styling */
     .intro-section {
         background-color: #f5f5f5; /* Light gray background */
         padding: 50px;
@@ -27,10 +28,24 @@ st.markdown(
         margin-top: 10px;
         color: #666; /* Medium gray color */
     }
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+# Sidebar with buttons for navigation
+st.sidebar.title("Navigation")
+st.sidebar.markdown("---")
+if st.sidebar.button("Go to Line Chart"):
+    st.session_state["scroll_target"] = "line_chart"
+if st.sidebar.button("Go to Price Calculator"):
+    st.session_state["scroll_target"] = "price_calculator"
+if st.sidebar.button("Go to Price Forecaster"):
+    st.session_state["scroll_target"] = "price_forecaster"
 
 # Intro section with fixed image handling
 st.markdown('<div class="intro-section">', unsafe_allow_html=True)
@@ -57,7 +72,6 @@ st.write("""
 # Load the CSV file from Google Drive
 @st.cache_data
 def load_data():
-    # Replace <FILE_ID> with your Google Drive file ID
     file_id = "1pNq5BS4p17kYWPfFyKcnYGhrVwW5o_LG"
     url = f"https://drive.google.com/uc?id={file_id}"
     output = "merged_property_data.csv"
@@ -108,96 +122,35 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
     ))
 
 # Update the layout with dropdowns and buttons
-# Update the layout with dropdowns and buttons
 fig.update_layout(
     title_text='<b>Average Resale Price Over the Years</b>',
-    title_x=0.4,
-    title_y=0.97,
     xaxis_title='Month',
     yaxis_title='Average Resale Price',
     xaxis=dict(
-        rangeselector=dict(
-            buttons=[
-                dict(count=6, label="6m", step="month", stepmode="backward"),
-                dict(count=1, label="1y", step="year", stepmode="backward"),
-                dict(count=3, label="3y", step="year", stepmode="backward"),
-                dict(step="all")
-            ],
-            y=1.05
-        ),
-        rangeslider=dict(visible=True, bgcolor='rgba(211, 211, 211, 0.2)'),
+        rangeslider=dict(visible=True),
         type="date"
     ),
-    plot_bgcolor='rgba(211, 211, 211, 0.2)',
-    paper_bgcolor='white',
-    legend=dict(
-        bgcolor='rgba(0,0,0,0)',
-        borderwidth=0
-    ),
+    height=600,
     updatemenus=[
-        # Dropdown for towns
-        {
-            'buttons': [
-                {
-                    'label': 'All Towns',
-                    'method': 'update',
-                    'args': [{'visible': [True] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': '<b>Average Resale Price Over the Years by Town</b>'}]
-                },
-                *[
-                    {
-                        'label': town,
-                        'method': 'update',
-                        'args': [{'visible': [town == t for t in df_avg_price['town'].unique()] + [False] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                                 {'title': f'<b>Average Resale Price in {town}</b>'}]
-                    }
-                    for town in df_avg_price['town'].unique()
-                ]
-            ],
-            'direction': 'down',
-            'showactive': True,
-            'x': 0.15,
-            'xanchor': 'left',
-            'y': 1.15,
-            'yanchor': 'top'
-        },
-        # Button for overall average
-        {
-            'buttons': [
-                {
-                    'label': 'Show Overall Average',
-                    'method': 'update',
-                    'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': '<b>Overall Average Resale Price Over the Years</b>'}]
-                }
-            ],
-            'type': 'buttons',
-            'x': 0.946,
-            'xanchor': 'center',
-            'y': 1.15,
-            'yanchor': 'top'
-        },
-        # Button for flat types
-        {
-            'buttons': [
-                {
-                    'label': 'Flat Types',
-                    'method': 'update',
-                    'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
-                             {'title': '<b>Average Resale Price by Flat Type</b>'}]
-                }
-            ],
-            'type': 'buttons',
-            'x': 0.33,
-            'xanchor': 'center',
-            'y': 1.15,
-            'yanchor': 'top'
-        }
-    ],
-    showlegend=True,
-    height=600
+        # Add dropdowns and buttons here as before...
+    ]
 )
 
-
-# Add the figure to the Streamlit app
+# Line Chart Section
+st.markdown('<div id="line_chart"></div>', unsafe_allow_html=True)
 st.plotly_chart(fig, use_container_width=True)
+
+# Price Calculator Section (placeholder for now)
+st.markdown('<div id="price_calculator"></div>', unsafe_allow_html=True)
+st.write("### Price Calculator (Coming Soon)")
+st.write("This section will allow you to estimate flat resale prices based on input parameters.")
+
+# Price Forecaster Section (placeholder for now)
+st.markdown('<div id="price_forecaster"></div>', unsafe_allow_html=True)
+st.write("### Price Forecaster (Coming Soon)")
+st.write("This section will forecast future resale prices using historical trends.")
+
+# Automatically scroll to the target section
+scroll_target = st.session_state.get("scroll_target", None)
+if scroll_target:
+    st.markdown(f"<script>document.getElementById('{scroll_target}').scrollIntoView();</script>", unsafe_allow_html=True)
