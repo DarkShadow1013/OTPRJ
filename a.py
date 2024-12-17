@@ -104,14 +104,12 @@ df_all = load_data()
 # ChatGPT API interaction
 def get_chatbot_response(user_input):
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.Completion.create(
             model="gpt-4",  # You can use gpt-3.5-turbo for faster responses
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant for real estate analytics."},
-                {"role": "user", "content": user_input}
-            ]
+            prompt=f"You are a helpful assistant for real estate analytics. Answer the following question: {user_input}",
+            max_tokens=100
         )
-        return response["choices"][0]["message"]["content"].strip()
+        return response["choices"][0]["text"].strip()  # Updated field for the response text
     except Exception as e:
         return f"Error: {e}"
 
