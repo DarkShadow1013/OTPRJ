@@ -11,7 +11,7 @@ st.set_page_config(layout="wide")
 
 # OpenAI API Key (set via environment variable)
 client = OpenAI(
-    api_key="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",  # Fetches from environment variable
+    api_key="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",  # Fetches from environment variable
 )
 
 # Custom CSS for chatbot and intro styling
