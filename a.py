@@ -1,7 +1,15 @@
+import openai
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file (for storing your API key securely)
+load_dotenv()
+
+# Set your OpenAI API key from .env file or directly set it here
+openai.api_key = "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"  # Assuming you're using secrets management for safety
 
 # Set wide layout
 st.set_page_config(layout="wide")
@@ -105,9 +113,17 @@ if section == "Intro":
             # Add user message to chat history
             st.session_state.messages.append({"role": "User", "content": user_input})
             
-            # Simulate AI response
-            # In a real scenario, you would make an API call to the LLaMA-powered chatbot here.
-            ai_response = f"AI: I can't answer your question right now, but this is a placeholder response about {user_input}."
+            # Call OpenAI API for response
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",  # You can adjust to another model if preferred
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant in the real estate industry."},
+                    {"role": "user", "content": user_input}
+                ]
+            )
+            
+            # Extract the assistant's reply from the response
+            ai_response = response['choices'][0]['message']['content']
             
             # Add AI response to chat history
             st.session_state.messages.append({"role": "AI", "content": ai_response})
@@ -238,12 +254,12 @@ if section == "Line Chart":
                     {
                         'label': 'Flat Types',
                         'method': 'update',
-                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
+                        'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [True] * len(df_flat_type_avg['flat_type'].unique())},
                                  {'title': '<b>Average Resale Price by Flat Type</b>'}]
                     }
                 ],
                 'type': 'buttons',
-                'x': 0.43,
+                'x': 0.5,
                 'xanchor': 'center',
                 'y': 1.11,
                 'yanchor': 'top'
@@ -251,14 +267,5 @@ if section == "Line Chart":
         ]
     )
 
-    st.plotly_chart(fig, use_container_width=True)
-
-# Price Calculator Section
-if section == "Price Calculator":
-    st.write("### Price Calculator (Coming Soon)")
-    st.write("This section will allow you to estimate flat resale prices based on input parameters.")
-
-# Price Forecaster Section
-if section == "Price Forecaster":
-    st.write("### Price Forecaster (Coming Soon)")
-    st.write("This section will forecast future resale prices using historical trends.")
+    # Display the plot
+    st.plotly_chart(fig)
