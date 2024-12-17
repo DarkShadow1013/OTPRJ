@@ -27,6 +27,29 @@ st.markdown(
         margin-top: 10px;
         color: #666; /* Medium gray color */
     }
+    .chatbox {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .chatbox-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .chatbox-messages {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+    .chatbox-input {
+        width: 100%;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -61,6 +84,38 @@ if section == "Intro":
     - Use dropdowns and buttons to filter by towns or flat types.
     - Click on legend items to toggle visibility of traces.
     """)
+
+    # Chatbot Section
+    st.markdown('<div class="chatbox">', unsafe_allow_html=True)
+    st.markdown('<div class="chatbox-title">Chat with our AI Assistant</div>', unsafe_allow_html=True)
+    
+    # Display chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # Display past messages
+    for message in st.session_state.messages:
+        st.write(f"**{message['role']}**: {message['content']}")
+    
+    # Input for user's message
+    user_input = st.text_input("Your message", key="user_input", placeholder="Ask me anything about the real estate market...")
+
+    if st.button("Send Message"):
+        if user_input:
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "User", "content": user_input})
+            
+            # Simulate AI response
+            # In a real scenario, you would make an API call to the LLaMA-powered chatbot here.
+            ai_response = f"AI: I can't answer your question right now, but this is a placeholder response about {user_input}."
+            
+            # Add AI response to chat history
+            st.session_state.messages.append({"role": "AI", "content": ai_response})
+            
+            # Clear the input field
+            st.experimental_rerun()
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Load the CSV file from Google Drive
 @st.cache_data
