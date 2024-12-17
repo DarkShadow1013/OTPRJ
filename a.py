@@ -189,7 +189,7 @@ if selected_section == "Line Chart":
     st.plotly_chart(fig)
 
 # Chatbot Section
-if selected_section == "Chatbot":  # Change from 'section' to 'selected_section'
+if selected_section == "Chatbot":
     st.title("AI Assistant")
 
     # Initialize session state for storing chat history
@@ -200,9 +200,8 @@ if selected_section == "Chatbot":  # Change from 'section' to 'selected_section'
     def chatbot(prompt):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, you work for orangetee as well."}
-            ] + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
+            messages=[{"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, you work for orangetee as well."}]
+            + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
             [{"role": "user", "content": prompt}],
             max_tokens=150  # Adjust token limit as needed
         )
@@ -234,6 +233,6 @@ if selected_section == "Chatbot":  # Change from 'section' to 'selected_section'
             ai_response = chatbot(user_input.strip())
             st.session_state.chat_log.append({"role": "assistant", "content": ai_response})
 
-            # Instead of rerunning the page, just display the new chat log with the response.
-            # This will update the page smoothly without affecting the sidebar layout.
-            st.experimental_rerun()
+            # Refresh the chat section by rerunning the app without resetting the entire page
+            st.experimental_rerun()  # Only rerun the chat section without affecting the rest of the app
+
