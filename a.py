@@ -43,7 +43,7 @@ st.markdown('<div class="intro-section">', unsafe_allow_html=True)
 st.markdown('<div class="intro-title">Welcome to the Average Resale Price Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market by towns and flat types.</div>', unsafe_allow_html=True)
 st.image(
-    "https://via.placeholder.com/800x400?text=Real+Estate+Dashboard",  # Replace with your image URL
+    "https://www.orangetee.com/newsroom/Newsroom/2024/20240319105913-OT%20Logo%20For%20Press%20Release.jpg",  # Replace with your image URL
     caption="Singapore Real Estate Analysis",
     use_column_width=True,
     output_format="auto",
