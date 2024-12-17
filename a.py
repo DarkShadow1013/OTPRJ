@@ -10,14 +10,44 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Sidebar with navigation
+# Custom CSS to style sidebar buttons as rectangular
+st.markdown("""
+    <style>
+        .stButton>button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .stButton>button:hover {
+            background-color: #45a049;
+        }
+        .stButton>button:active {
+            background-color: #388e3c;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Sidebar with rectangular buttons
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-section = st.sidebar.radio(
-    "Go to Section:",
-    options=["Intro", "Line Chart", "Chatbot"],
-    index=0,
-)
+section = None
+
+# Create buttons for each section
+if st.sidebar.button("Intro"):
+    section = "Intro"
+elif st.sidebar.button("Line Chart"):
+    section = "Line Chart"
+elif st.sidebar.button("Chatbot"):
+    section = "Chatbot"
 
 # Load the CSV file from Google Drive
 @st.cache_data
@@ -51,19 +81,19 @@ if section == "Intro":
         unsafe_allow_html=True
     )
     st.markdown('</div>', unsafe_allow_html=True)
-    st.write("""
-    **HDB Analytics Portal:**
-    
-    - **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
-    
-    - **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
-    
-    - **Customizable Filters:** Customize your search based on room types, price range, and amenities, with real-time updates as you adjust the filters.
-    
-    - **Insights & Reports:** Access detailed insights and reports to support your decision-making process. The portal provides up-to-date property market trends and analytics for a comprehensive view.
-    
-    - **Real-Time Updates:** Stay informed with the latest data, refreshed regularly to ensure accurate and current property information.
-    """)
+st.write("""
+**HDB Analytics Portal:**
+
+- **Overview:** This portal provides an interactive platform for exploring and analyzing HDB property data, offering valuable insights for real estate agents, investors, and individuals interested in the property market.
+
+- **Data Visualization:** View property data in an intuitive and visually appealing manner through dynamic charts, tables, and maps. Analyze trends, prices, and sales volume over time.
+
+- **Customizable Filters:** Customize your search based on room types, price range, and amenities, with real-time updates as you adjust the filters.
+
+- **Insights & Reports:** Access detailed insights and reports to support your decision-making process. The portal provides up-to-date property market trends and analytics for a comprehensive view.
+
+- **Real-Time Updates:** Stay informed with the latest data, refreshed regularly to ensure accurate and current property information.
+""")
 
 # Line Chart Section
 if section == "Line Chart":
