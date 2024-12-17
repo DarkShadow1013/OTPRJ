@@ -108,6 +108,7 @@ for flat_type in df_flat_type_avg['flat_type'].unique():
     ))
 
 # Update the layout with dropdowns and buttons
+# Update the layout with dropdowns and buttons
 fig.update_layout(
     title_text='<b>Average Resale Price Over the Years</b>',
     title_x=0.4,
@@ -133,8 +134,70 @@ fig.update_layout(
         bgcolor='rgba(0,0,0,0)',
         borderwidth=0
     ),
+    updatemenus=[
+        # Dropdown for towns
+        {
+            'buttons': [
+                {
+                    'label': 'All Towns',
+                    'method': 'update',
+                    'args': [{'visible': [True] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                             {'title': '<b>Average Resale Price Over the Years by Town</b>'}]
+                },
+                *[
+                    {
+                        'label': town,
+                        'method': 'update',
+                        'args': [{'visible': [town == t for t in df_avg_price['town'].unique()] + [False] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                                 {'title': f'<b>Average Resale Price in {town}</b>'}]
+                    }
+                    for town in df_avg_price['town'].unique()
+                ]
+            ],
+            'direction': 'down',
+            'showactive': True,
+            'x': 0.15,
+            'xanchor': 'left',
+            'y': 1.15,
+            'yanchor': 'top'
+        },
+        # Button for overall average
+        {
+            'buttons': [
+                {
+                    'label': 'Show Overall Average',
+                    'method': 'update',
+                    'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [True] + [False] * len(df_flat_type_avg['flat_type'].unique())},
+                             {'title': '<b>Overall Average Resale Price Over the Years</b>'}]
+                }
+            ],
+            'type': 'buttons',
+            'x': 0.946,
+            'xanchor': 'center',
+            'y': 1.15,
+            'yanchor': 'top'
+        },
+        # Button for flat types
+        {
+            'buttons': [
+                {
+                    'label': 'Flat Types',
+                    'method': 'update',
+                    'args': [{'visible': [False] * len(df_avg_price['town'].unique()) + [False] + [True] * len(df_flat_type_avg['flat_type'].unique())},
+                             {'title': '<b>Average Resale Price by Flat Type</b>'}]
+                }
+            ],
+            'type': 'buttons',
+            'x': 0.33,
+            'xanchor': 'center',
+            'y': 1.15,
+            'yanchor': 'top'
+        }
+    ],
+    showlegend=True,
     height=600
 )
+
 
 # Add the figure to the Streamlit app
 st.plotly_chart(fig, use_container_width=True)
