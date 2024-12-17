@@ -156,9 +156,9 @@ if section == "Line Chart":
                 ],
                 'direction': 'down',
                 'showactive': True,
-                'x': 0.15,
+                'x': 0.25,
                 'xanchor': 'left',
-                'y': 1.15,
+                'y': 1.11,
                 'yanchor': 'top'
             },
             # Button for overall average
@@ -172,9 +172,9 @@ if section == "Line Chart":
                     }
                 ],
                 'type': 'buttons',
-                'x': 0.946,
+                'x': 0.9,
                 'xanchor': 'center',
-                'y': 1.15,
+                'y': 1.11,
                 'yanchor': 'top'
             },
             # Button for flat types
@@ -188,9 +188,9 @@ if section == "Line Chart":
                     }
                 ],
                 'type': 'buttons',
-                'x': 0.33,
+                'x': 0.43,
                 'xanchor': 'center',
-                'y': 1.1,
+                'y': 1.11,
                 'yanchor': 'top'
             }
         ]
