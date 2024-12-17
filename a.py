@@ -189,7 +189,7 @@ if selected_section == "Line Chart":
     st.plotly_chart(fig)
 
 # Chatbot Section
-if section == "Chatbot":
+if selected_section == "Chatbot":  # Change from 'section' to 'selected_section'
     st.title("AI Assistant")
 
     # Initialize session state for storing chat history
@@ -237,4 +237,3 @@ if section == "Chatbot":
             # Instead of rerunning the page, just display the new chat log with the response.
             # This will update the page smoothly without affecting the sidebar layout.
             st.experimental_rerun()
-
