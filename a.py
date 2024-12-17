@@ -10,44 +10,14 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Custom CSS to style sidebar buttons as rectangular
-st.markdown("""
-    <style>
-        .stButton>button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-        }
-        .stButton>button:hover {
-            background-color: #45a049;
-        }
-        .stButton>button:active {
-            background-color: #388e3c;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# Sidebar with rectangular buttons
+# Sidebar with navigation
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
-section = None
-
-# Create buttons for each section
-if st.sidebar.button("Intro"):
-    section = "Intro"
-elif st.sidebar.button("Line Chart"):
-    section = "Line Chart"
-elif st.sidebar.button("Chatbot"):
-    section = "Chatbot"
+section = st.sidebar.radio(
+    "Go to Section:",
+    options=["Intro", "Line Chart", "Chatbot"],
+    index=0,
+)
 
 # Load the CSV file from Google Drive
 @st.cache_data
