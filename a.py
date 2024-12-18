@@ -19,6 +19,7 @@ st.sidebar.markdown(
     """, 
     unsafe_allow_html=True
 )
+
 # Sidebar with navigation
 st.sidebar.title("Navigation")
 st.sidebar.markdown("---")
