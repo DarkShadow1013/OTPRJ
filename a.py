@@ -18,18 +18,19 @@ logo_path = Path("logo.png")
 st.markdown(
     """
     <style>
-        /* Fix the sidebar width */
+        /* Fix the sidebar width and prevent resizing */
         .css-1d391kg { 
             width: 250px !important; /* Set the sidebar width to 250px */
             height: 100vh !important; /* Ensure the sidebar takes full height */
+            overflow: hidden !important; /* Prevent content from overflowing */
         }
 
-        /* Prevent the sidebar from being collapsible */
-        .css-1v3fvcr { 
-            display: block !important; /* Ensure the separator line always displays */
+        /* Ensure the sidebar cannot be hidden */
+        .css-1d391kg > div { 
+            visibility: visible !important; 
         }
 
-        /* Adjust sidebar layout */
+        /* Move the logo higher in the sidebar */
         .sidebar-logo {
             margin-top: -700px; /* Adjust the top margin to move the logo higher */
             text-align: center;
@@ -43,28 +44,23 @@ st.markdown(
             text-align: center;
         }
 
-        /* Adjust the space between the title and the separator line */
-        .css-1v3fvcr {
-            margin-top: -10px !important;
-        }
-
-        /* Ensure all buttons in sidebar have the same size and move them to the left */
+        /* Move buttons to the left and make them same size */
         div.stButton > button {
-            width: 100%; /* Full width buttons */
+            width: 100% !important; /* Full width buttons */
             padding: 15px; /* Adjust padding for consistent button size */
             font-size: 16px; /* Adjust font size */
             margin-top: 5px; /* Space between buttons */
-            text-align: left; /* Align the text to the left */
+            text-align: left !important; /* Align text to the left */
         }
 
-        /* Adjust the button styling */
-        .css-1lcb3mp { 
-            padding-left: 10px; /* Move buttons to the left */
-        }
-
-        /* Adjust sidebar layout for consistency */
+        /* Adjust the line below the title */
         .css-1v3fvcr {
-            margin-top: 20px !important; /* Adjust this value to move the line down */
+            margin-top: 5px !important; /* Move the line closer to the title */
+        }
+
+        /* Fix the layout of the sidebar and its elements */
+        .css-1v3fvcr {
+            margin-top: 10px !important; /* Adjust this value to move the line down */
         }
     </style>
     """,
@@ -92,6 +88,7 @@ if st.sidebar.button("Chatbot"):
 
 # Use the session state to determine the current section
 section = st.session_state.section
+
 
 
 # Load the CSV file from Google Drive
