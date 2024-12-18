@@ -11,40 +11,24 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-# Get the path to the logo.png file
-logo_path = Path("logo.png")
-
 # Add custom CSS for styling
 st.markdown(
     """
     <style>
-        .sidebar-logo {
-            margin-top: -700px; /* Adjusted the top margin to move the logo higher */
-            text-align: center;
-        }
-        .sidebar-title {
-            margin-top: -80px; /* Adjust the top margin to move the title higher */
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
-        .sidebar-radio {
-            margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
+        /* Adjust the sidebar layout and position the logo */
+        .css-1d391kg {  /* Streamlit sidebar container class */
+            padding-top: 0px;  /* Remove default top padding */
         }
         .css-1lcb3mp {  /* Streamlit sidebar image container class */
-            margin-top: -300px;  /* Adjust the value to move the logo higher */
+            margin-top: -150px !important;  /* Adjust the top margin of the image */
         }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Add the logo to the sidebar with adjusted styling
-
-
-# Display the logo using Streamlit's st.image method
-st.sidebar.image("logo.png", use_container_width =True)
-
+# Add the logo to the sidebar
+st.sidebar.image("logo.png", use_container_width=True)
 
 
 
