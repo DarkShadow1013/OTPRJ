@@ -76,8 +76,8 @@ if st.sidebar.button("Intro"):
     st.session_state.section = "Intro"
 if st.sidebar.button("Line Chart"):
     st.session_state.section = "Line Chart"
-if st.sidebar.button("Chatbot"):
-    st.session_state.section = "Chatbot"
+if st.sidebar.button("Otty Chatbot"):
+    st.session_state.section = "Otty Chatbot"
 
 # Use the session state to determine the current section
 section = st.session_state.section
@@ -249,8 +249,8 @@ if section == "Line Chart":
     # Display the plot
     st.plotly_chart(fig)
 
-if section == "Chatbot":
-    st.title("AI Assistant")
+if section == "Otty Chatbot":
+    st.title("Otty - AI Chatbot Assistant")
 
     # Initialize session state for storing chat history
     if "chat_log" not in st.session_state:
@@ -261,7 +261,7 @@ if section == "Chatbot":
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, your name is Otty, you work for orangetee as well and love orangetee and will always talk about how good they are."}
+                {"role": "system", "content": "You are a helpful assistant in the real estate industry of Singapore, your name is Otty, you should remind users at the begining, you work for orangetee as well and love orangetee and will always talk about how good they are."}
             ] + [{"role": log["role"], "content": log["content"]} for log in st.session_state.chat_log] +
             [{"role": "user", "content": prompt}],
             max_tokens=150  # Adjust token limit as needed
@@ -276,7 +276,7 @@ if section == "Chatbot":
             if log["role"] == "user":
                 st.markdown(f"**You:** {log['content']}")
             elif log["role"] == "assistant":
-                st.markdown(f"**Chatbot:** {log['content']}")
+                st.markdown(f"**Otty:** {log['content']}")
 
     # Input field below chat log
     st.markdown("---")
