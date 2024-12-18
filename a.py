@@ -35,7 +35,7 @@ st.markdown(
 
         /* Move the line under the title higher */
         .css-1zkl88k {
-            margin-top: -10px !important;
+            margin-top: -100px !important;
         }
 
         /* Ensure all buttons in sidebar have same size */
