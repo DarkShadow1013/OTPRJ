@@ -93,6 +93,7 @@ if st.sidebar.button("Chatbot"):
 # Use the session state to determine the current section
 section = st.session_state.section
 
+
 # Load the CSV file from Google Drive
 @st.cache_data
 def load_data():
