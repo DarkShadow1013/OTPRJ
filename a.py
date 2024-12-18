@@ -39,7 +39,7 @@ st.markdown(
 
         /* Ensure all buttons in sidebar have same size */
         div.stButton > button {
-            width: 100%; /* Full width buttons */
+            width: 110%; /* Full width buttons */
             padding: 10px; /* Adjust padding for consistent button size */
             font-size: 16px; /* Adjust font size */
             margin-top: 5px; /* Space between buttons */
