@@ -23,7 +23,7 @@ st.sidebar.image(
 )
 
 # Sidebar with navigation
-st.sidebar.title("Navigation")
+st.sidebar.title("Menu")
 st.sidebar.markdown("---")
 section = st.sidebar.radio(
     "Go to Section:",
@@ -51,7 +51,7 @@ df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resal
 
 # Intro Section
 if section == "Intro":
-    st.markdown('<div class="intro-section">', unsafe_allow_html=True)
+    st.markdown('<div class="intro-section" style="margin-top: -20px;">', unsafe_allow_html=True)
     st.markdown('<h1 style="font-weight: bold; font-size: 36px;">HDB Analytics Portal</h1>', unsafe_allow_html=True)
     st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
     st.markdown(
