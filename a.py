@@ -72,11 +72,13 @@ if "section" not in st.session_state:
     st.session_state.section = "Intro"  # Default to "Intro"
 
 # Replace radio buttons with normal buttons
-if st.sidebar.button("Intro"):
-    st.session_state.section = "Intro"
-if st.sidebar.button("Line Chart"):
-    st.session_state.section = "Line Chart"
-if st.sidebar.button("Otty Chatbot"):
+if st.sidebar.button("Home"):
+    st.session_state.section = "Home"
+if st.sidebar.button("Price Chart"):
+    st.session_state.section = "Price Chart"
+if st.sidebar.button("HDB Flat Price Calculator"):
+    st.session_state.section = "HDB Flat Price Calculator"
+if st.sidebar.button("Otty Chatbot🤖"):
     st.session_state.section = "Otty Chatbot"
 
 # Use the session state to determine the current section
@@ -103,7 +105,7 @@ df_monthly_avg = df_all.groupby('month', as_index=False)['resale_price'].mean()
 df_flat_type_avg = df_all.groupby(['month', 'flat_type'], as_index=False)['resale_price'].mean()
 
 # Intro Section
-if section == "Intro":
+if section == "Home":
     st.markdown('<div class="intro-section" style="margin-top: -20px;">', unsafe_allow_html=True)
     st.markdown('<h1 style="font-weight: bold; font-size: 36px;">HDB Analytics Portal</h1>', unsafe_allow_html=True)
     st.markdown('<div class="intro-subtitle">Explore trends in Singapore\'s real estate market.</div>', unsafe_allow_html=True)
@@ -131,7 +133,7 @@ if section == "Intro":
     """)
 
 # Line Chart Section
-if section == "Line Chart":
+if section == "Price Chart":
     # Create the Plotly figure
     fig = go.Figure()
 
