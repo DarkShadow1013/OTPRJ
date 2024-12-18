@@ -18,12 +18,13 @@ logo_path = Path("logo.png")
 st.markdown(
     """
     <style>
+        /* Adjust sidebar layout and button size */
         .sidebar-logo {
-            margin-top: -700px; /* Adjusted the top margin to move the logo higher */
+            margin-top: -700px; /* Adjust the top margin to move the logo higher */
             text-align: center;
         }
         .sidebar-title {
-            margin-top: -20px; /* Adjust the top margin to move the title higher */
+            margin-top: -10px; /* Adjust the top margin to move the title higher */
             font-size: 20px;
             font-weight: bold;
             text-align: center;
@@ -31,8 +32,17 @@ st.markdown(
         .sidebar-radio {
             margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
         }
-        .css-1lcb3mp {  /* Streamlit sidebar image container class */
-            margin-top: -300px;  /* Adjust the value to move the logo higher */
+
+        /* Move the line under the title higher */
+        .css-1zkl88k {
+            margin-top: -10px !important;
+        }
+
+        /* Ensure all buttons in sidebar have same size */
+        .css-1n76uvr button {
+            width: 100%; /* Full width buttons */
+            padding: 10px; /* Adjust padding for consistent button size */
+            font-size: 16px; /* Adjust font size */
         }
     </style>
     """,
@@ -40,10 +50,7 @@ st.markdown(
 )
 
 # Add the logo to the sidebar with adjusted styling
-
-
-# Display the logo using Streamlit's st.image method
-st.sidebar.image("logo.png", use_container_width =True)
+st.sidebar.image("logo.png", use_container_width=True)
 
 # Sidebar with navigation (using normal buttons)
 st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
