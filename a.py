@@ -19,7 +19,7 @@ st.markdown(
     """
     <style>
         .sidebar-logo {
-            margin-top: -70px; /* Adjusted the top margin to move the logo higher */
+            margin-top: -700px; /* Adjusted the top margin to move the logo higher */
             text-align: center;
         }
         .sidebar-title {
