@@ -42,16 +42,21 @@ st.sidebar.image(
     use_container_width =True
 )
 
-# Sidebar with navigation
+
+
+# Sidebar with navigation (updated with normal buttons)
 st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
 st.sidebar.markdown("---")
-st.sidebar.markdown('<div class="sidebar-radio">', unsafe_allow_html=True)
-section = st.sidebar.radio(
-    "",
-    options=["Intro", "Line Chart", "Chatbot"],
-    index=0,
-)
-st.sidebar.markdown('</div>', unsafe_allow_html=True)
+
+# Replace radio buttons with normal buttons
+if st.sidebar.button("Intro"):
+    section = "Intro"
+elif st.sidebar.button("Line Chart"):
+    section = "Line Chart"
+elif st.sidebar.button("Chatbot"):
+    section = "Chatbot"
+else:
+    section = "Intro"  # Default to "Intro" if no button is clicked
 
 # Load the CSV file from Google Drive
 @st.cache_data
