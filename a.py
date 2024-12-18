@@ -44,19 +44,26 @@ st.sidebar.image(
 
 
 
-# Sidebar with navigation (updated with normal buttons)
+
+
+# Sidebar with navigation (using normal buttons)
 st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
+# Initialize session state for section if it doesn't exist
+if "section" not in st.session_state:
+    st.session_state.section = "Intro"  # Default to "Intro"
+
 # Replace radio buttons with normal buttons
 if st.sidebar.button("Intro"):
-    section = "Intro"
-elif st.sidebar.button("Line Chart"):
-    section = "Line Chart"
-elif st.sidebar.button("Chatbot"):
-    section = "Chatbot"
-else:
-    section = "Intro"  # Default to "Intro" if no button is clicked
+    st.session_state.section = "Intro"
+if st.sidebar.button("Line Chart"):
+    st.session_state.section = "Line Chart"
+if st.sidebar.button("Chatbot"):
+    st.session_state.section = "Chatbot"
+
+# Use the session state to determine the current section
+section = st.session_state.section
 
 # Load the CSV file from Google Drive
 @st.cache_data
