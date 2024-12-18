@@ -36,13 +36,6 @@ st.markdown(
             text-align: center;
         }
 
-        /* Adjust the title's top margin */
-        .sidebar-title {
-            margin-top: -10px; /* Adjust the top margin to move the title higher */
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
 
         /* Move buttons to the left and make them same size */
         div.stButton > button {
@@ -71,7 +64,7 @@ st.markdown(
 st.sidebar.image("logo.png", use_container_width=True)
 
 # Sidebar with navigation (using normal buttons)
-st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
+
 st.sidebar.markdown("---")
 
 # Initialize session state for section if it doesn't exist
