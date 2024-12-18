@@ -19,7 +19,7 @@ st.markdown(
     """
     <style>
         .sidebar-logo {
-            margin-top: -40px; /* Adjust the top margin to move the logo higher */
+            margin-top: -70px; /* Adjusted the top margin to move the logo higher */
             text-align: center;
         }
         .sidebar-title {
@@ -37,10 +37,11 @@ st.markdown(
 )
 
 # Add the logo to the sidebar with adjusted styling
-st.sidebar.image(
-    logo_path, 
-    use_container_width =True
+st.sidebar.markdown(
+    '<div class="sidebar-logo"><img src="logo.png" style="width:100%;"></div>', 
+    unsafe_allow_html=True
 )
+
 
 
 
