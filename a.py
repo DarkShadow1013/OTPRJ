@@ -19,14 +19,7 @@ logo_path = Path("logo.png")
 # Add the logo to the sidebar
 st.sidebar.image(
     logo_path, 
-    caption="Your Logo", 
-    use_column_width=True
-)
-
-# Add a link below the image (optional)
-st.sidebar.markdown(
-    '[Visit OrangeTee](https://www.orangetee.com)',
-    unsafe_allow_html=True
+    use_container_width =True
 )
 
 # Sidebar with navigation
