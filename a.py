@@ -11,12 +11,21 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
+from pathlib import Path
+
+# Get the path to the logo.png file
+logo_path = Path("logo.png")
+
+# Add the logo to the sidebar
+st.sidebar.image(
+    logo_path, 
+    caption="Your Logo", 
+    use_column_width=True
+)
+
+# Add a link below the image (optional)
 st.sidebar.markdown(
-    """
-    <a href="https://www.orangetee.com" target="_blank">
-        <img src="logo.png" alt="Your Logo" style="width: 100%; height: auto;"/>
-    </a>
-    """, 
+    '[Visit OrangeTee](https://www.orangetee.com)',
     unsafe_allow_html=True
 )
 
