@@ -15,7 +15,26 @@ st.set_page_config(layout="wide")
 logo_path = Path("logo.png")
 
 # Add custom CSS for styling
-
+st.markdown(
+    """
+    <style>
+        .sidebar-logo {
+            margin-top: -40px; /* Adjust the top margin to move the logo higher */
+            text-align: center;
+        }
+        .sidebar-title {
+            margin-top: -20px; /* Adjust the top margin to move the title higher */
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sidebar-radio {
+            margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Add the logo to the sidebar with adjusted styling
 st.sidebar.markdown(f"""
