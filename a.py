@@ -37,11 +37,10 @@ st.markdown(
 )
 
 # Add the logo to the sidebar with adjusted styling
-st.sidebar.markdown(
-    '<div class="sidebar-logo"><img src="logo.png" style="width:100%;"></div>', 
-    unsafe_allow_html=True
-)
 
+
+# Display the logo using Streamlit's st.image method
+st.sidebar.image("logo.png", use_column_width=True)
 
 
 
