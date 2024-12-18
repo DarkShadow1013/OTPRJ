@@ -31,6 +31,9 @@ st.markdown(
         .sidebar-radio {
             margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
         }
+        .css-1lcb3mp {  /* Streamlit sidebar image container class */
+            margin-top: -30px;  /* Adjust the value to move the logo higher */
+        }
     </style>
     """,
     unsafe_allow_html=True
@@ -40,7 +43,7 @@ st.markdown(
 
 
 # Display the logo using Streamlit's st.image method
-st.sidebar.image("logo.png", use_column_width=True)
+st.sidebar.image("logo.png", use_container_width =True)
 
 
 
