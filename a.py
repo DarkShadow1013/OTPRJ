@@ -32,7 +32,7 @@ st.markdown(
             margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
         }
         .css-1lcb3mp {  /* Streamlit sidebar image container class */
-            margin-top: -30px;  /* Adjust the value to move the logo higher */
+            margin-top: -300px;  /* Adjust the value to move the logo higher */
         }
     </style>
     """,
