@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import gdown
-
+from pathlib import Path
 
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = st.secrets["openai"]["api_key"]
@@ -11,25 +11,48 @@ openai.api_key = st.secrets["openai"]["api_key"]
 # Set wide layout
 st.set_page_config(layout="wide")
 
-from pathlib import Path
-
 # Get the path to the logo.png file
 logo_path = Path("logo.png")
 
-# Add the logo to the sidebar
-st.sidebar.image(
-    logo_path, 
-    use_container_width =True
+# Add custom CSS for styling
+st.markdown(
+    """
+    <style>
+        .sidebar-logo {
+            margin-top: -40px; /* Adjust the top margin to move the logo higher */
+            text-align: center;
+        }
+        .sidebar-title {
+            margin-top: -20px; /* Adjust the top margin to move the title higher */
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sidebar-radio {
+            margin-top: -10px; /* Adjust the top margin to move the radio buttons higher */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
+# Add the logo to the sidebar with adjusted styling
+st.sidebar.markdown(f"""
+    <div class="sidebar-logo">
+        <img src="{logo_path}" alt="Logo" style="width: 80%; height: auto;">
+    </div>
+""", unsafe_allow_html=True)
+
 # Sidebar with navigation
-st.sidebar.title("Menu")
+st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
 st.sidebar.markdown("---")
+st.sidebar.markdown('<div class="sidebar-radio">', unsafe_allow_html=True)
 section = st.sidebar.radio(
-    "Go to Section:",
+    "",
     options=["Intro", "Line Chart", "Chatbot"],
     index=0,
 )
+st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # Load the CSV file from Google Drive
 @st.cache_data
