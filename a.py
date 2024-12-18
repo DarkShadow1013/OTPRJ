@@ -41,8 +41,8 @@ st.markdown(
         /* Ensure all buttons in sidebar have same size */
         .css-1n76uvr button {
             width: 100%; /* Full width buttons */
-            padding: 10px; /* Adjust padding for consistent button size */
-            font-size: 16px; /* Adjust font size */
+            padding: 100px; /* Adjust padding for consistent button size */
+            font-size: 160px; /* Adjust font size */
         }
     </style>
     """,
