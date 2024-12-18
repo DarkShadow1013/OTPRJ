@@ -23,7 +23,7 @@ st.markdown(
             text-align: center;
         }
         .sidebar-title {
-            margin-top: -20px; /* Adjust the top margin to move the title higher */
+            margin-top: -80px; /* Adjust the top margin to move the title higher */
             font-size: 20px;
             font-weight: bold;
             text-align: center;
