@@ -18,6 +18,17 @@ logo_path = Path("logo.png")
 st.markdown(
     """
     <style>
+        /* Fix the sidebar width */
+        .css-1d391kg { 
+            width: 250px !important; /* Set the sidebar width to 250px */
+            height: 100vh !important; /* Ensure the sidebar takes full height */
+        }
+
+        /* Prevent the sidebar from being collapsible */
+        .css-1v3fvcr { 
+            display: block !important; /* Ensure the separator line always displays */
+        }
+
         /* Adjust sidebar layout */
         .sidebar-logo {
             margin-top: -700px; /* Adjust the top margin to move the logo higher */
@@ -37,12 +48,18 @@ st.markdown(
             margin-top: -10px !important;
         }
 
-        /* Ensure all buttons in sidebar have same size */
+        /* Ensure all buttons in sidebar have the same size and move them to the left */
         div.stButton > button {
-            width: 110%; /* Full width buttons */
-            padding: 50px; /* Adjust padding for consistent button size */
+            width: 100%; /* Full width buttons */
+            padding: 15px; /* Adjust padding for consistent button size */
             font-size: 16px; /* Adjust font size */
             margin-top: 5px; /* Space between buttons */
+            text-align: left; /* Align the text to the left */
+        }
+
+        /* Adjust the button styling */
+        .css-1lcb3mp { 
+            padding-left: 10px; /* Move buttons to the left */
         }
 
         /* Adjust sidebar layout for consistency */
@@ -75,7 +92,6 @@ if st.sidebar.button("Chatbot"):
 
 # Use the session state to determine the current section
 section = st.session_state.section
-
 
 # Load the CSV file from Google Drive
 @st.cache_data
