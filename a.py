@@ -37,11 +37,10 @@ st.markdown(
 )
 
 # Add the logo to the sidebar with adjusted styling
-st.sidebar.markdown(f"""
-    <div class="sidebar-logo">
-        <img src="{logo_path}" alt="Logo" style="width: 80%; height: auto;">
-    </div>
-""", unsafe_allow_html=True)
+st.sidebar.image(
+    logo_path, 
+    use_container_width =True
+)
 
 # Sidebar with navigation
 st.sidebar.markdown('<div class="sidebar-title">Menu</div>', unsafe_allow_html=True)
