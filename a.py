@@ -14,7 +14,7 @@ st.set_page_config(layout="wide")
 st.sidebar.markdown(
     """
     <a href="https://www.orangetee.com" target="_blank">
-        <img src="https://www.orangetee.com/newsroom/Newsroom/2024/20240319105913-OT%20Logo%20For%20Press%20Release.jpg" alt="Your Logo" style="width: 100%; height: auto;"/>
+        <img src="logo.png" alt="Your Logo" style="width: 100%; height: auto;"/>
     </a>
     """, 
     unsafe_allow_html=True
