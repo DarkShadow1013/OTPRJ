@@ -4,4 +4,5 @@ plotly
 gdown
 openai==0.28
 pathlib
+scikit-learn
 
