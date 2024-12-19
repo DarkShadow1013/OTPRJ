@@ -147,7 +147,7 @@ if section == "HDB Flat Price Calculator":
     street_name = st.text_input("Enter Street Name")
     storey_range = st.selectbox("Select Storey Range", ["01-03", "04-06", "07-09", "10-12", "13-15", "16-18", "19-21", "22-24", "25-27", "28-30", "31-33", "34-36", "37-39", "40-42"])
     floor_area_sqm = st.text_input("Enter Floor Area (in sqm)")
-    flat_model = st.text_input("Enter Flat Model")
+    flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
     lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
     remaining_lease = st.text_input("Enter Remaining Lease (in years)")
     residential = st.radio("Is it Residential?", ["Yes", "No"])
