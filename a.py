@@ -4,7 +4,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import gdown
 from pathlib import Path
-import pickle
 
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = st.secrets["openai"]["api_key"]
