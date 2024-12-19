@@ -174,7 +174,7 @@ if section == "HDB Flat Price Calculator":
                 "flat_type": [flat_type],  # Type of flat
                 "block": [block],  # Block number
                 "street_name": [street_name],  # Street name
-                "storey_range": [storey_range],  # Storey range
+                "storey_range": 1,  # Storey range
                 "floor_area_sqm": [floor_area_sqm],  # Floor area in sqm
                 "flat_model": [flat_model],  # Flat model
                 "lease_commence_date": [lease_commence_date],  # Lease commence date
