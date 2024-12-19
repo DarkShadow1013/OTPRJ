@@ -136,43 +136,7 @@ if section == "Home":
 
 
 
-# Price Calculator Section
-if section == "HDB Flat Price Calculator":
-    st.title("HDB Flat Price Calculator")
-    
-    # User inputs
-    town = st.selectbox("Select Town", df_all["town"].unique())
-    flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
-    remaining_lease = st.slider("Remaining Lease (years)", min_value=0, max_value=99, value=50, step=1)
-    close_to_hawker = st.selectbox("Close to Hawker Centre", ["Yes", "No"])
-    sq_feet = st.number_input("Size (sq ft)", min_value=1, value=1000, step=1)
-    
-    # Load preprocessing and model files
-    with open("preprocessing.pkl", "rb") as f:
-        preprocessing = pickle.load(f)
-    with open("trained_model.pkl", "rb") as f:
-        model = pickle.load(f)
 
-    # Predict price
-    if st.button("Calculate Price"):
-        try:
-            # Process inputs
-            input_data = pd.DataFrame({
-                "town": [town],
-                "flat_type": [flat_type],
-                "remaining_lease": [remaining_lease],
-                "close_to_hawker": [1 if close_to_hawker == "Yes" else 0],
-                "sq_feet": [sq_feet],
-            })
-            
-            # Preprocess inputs
-            processed_data = preprocessing.transform(input_data)
-            
-            # Predict using the model
-            prediction = model.predict(processed_data)
-            st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
-        except Exception as e:
-            st.error(f"Error in prediction: {e}")
 
 
 
