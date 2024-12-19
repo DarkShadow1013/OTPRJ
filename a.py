@@ -147,9 +147,9 @@ if section == "HDB Flat Price Calculator":
     sq_feet = st.number_input("Size (sq ft)", min_value=1, value=1000, step=1)
     
     # Load preprocessing and model files
-    with open("preprocessing.pkl", "rb") as f:
+    with open("preprocessing_pipeline.pkl", "rb") as f:
         preprocessing = pickle.load(f)
-    with open("trained_model.pkl", "rb") as f:
+    with open("best_model.pkl", "rb") as f:
         model = pickle.load(f)
 
     # Predict price
