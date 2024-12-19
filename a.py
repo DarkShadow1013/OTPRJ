@@ -156,13 +156,27 @@ if section == "HDB Flat Price Calculator":
     if st.button("Calculate Price"):
         try:
             # Process inputs
+            # Assuming inputs for each variable are collected from the user
             input_data = pd.DataFrame({
-                "town": [town],
-                "flat_type": [flat_type],
-                "remaining_lease": [remaining_lease],
-                "close_to_hawker": [1 if close_to_hawker == "Yes" else 0],
-                "sq_feet": [sq_feet],
+                "month": [month],  # Raw month input
+                "town": [town],  # Town name
+                "flat_type": [flat_type],  # Type of flat
+                "block": [block],  # Block number
+                "street_name": [street_name],  # Street name
+                "storey_range": [storey_range],  # Storey range
+                "floor_area_sqm": [floor_area_sqm],  # Floor area in sqm
+                "flat_model": [flat_model],  # Flat model
+                "lease_commence_date": [lease_commence_date],  # Lease commence date
+                "remaining_lease": [remaining_lease],  # Remaining lease period
+                "resale_price": [resale_price],  # Resale price (target variable for training)
+                "residential": [1 if residential == "Yes" else 0],  # Binary encoding for residential
+                "commercial": [1 if commercial == "Yes" else 0],  # Binary encoding for commercial
+                "market_hawker": [1 if market_hawker == "Yes" else 0],  # Binary encoding for market/hawker
+                "miscellaneous": [1 if miscellaneous == "Yes" else 0],  # Binary encoding for miscellaneous facilities
+                "multistorey_carpark": [1 if multistorey_carpark == "Yes" else 0],  # Binary encoding for multistorey carpark
+                "precinct_pavilion": [1 if precinct_pavilion == "Yes" else 0],  # Binary encoding for precinct pavilion
             })
+
             
             # Preprocess inputs
             processed_data = preprocessing.transform(input_data)
