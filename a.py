@@ -179,7 +179,6 @@ if section == "HDB Flat Price Calculator":
                 "flat_model": [flat_model],  # Flat model
                 "lease_commence_date": [lease_commence_date],  # Lease commence date
                 "remaining_lease": [remaining_lease],  # Remaining lease period
-                "resale_price": [resale_price],  # Resale price (target variable for training)
                 "residential": [1 if residential == "Yes" else 0],  # Binary encoding for residential
                 "commercial": [1 if commercial == "Yes" else 0],  # Binary encoding for commercial
                 "market_hawker": [1 if market_hawker == "Yes" else 0],  # Binary encoding for market/hawker
