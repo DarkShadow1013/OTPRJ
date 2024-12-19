@@ -140,11 +140,22 @@ if section == "HDB Flat Price Calculator":
     st.title("HDB Flat Price Calculator")
     
     # User inputs
+    month = st.selectbox("Select Month", ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
     town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
-    remaining_lease = st.slider("Remaining Lease (years)", min_value=0, max_value=99, value=50, step=1)
-    close_to_hawker = st.selectbox("Close to Hawker Centre", ["Yes", "No"])
-    sq_feet = st.number_input("Size (sq ft)", min_value=1, value=1000, step=1)
+    block = st.text_input("Enter Block Number")
+    street_name = st.text_input("Enter Street Name")
+    storey_range = st.selectbox("Select Storey Range", ["01-03", "04-06", "07-09", "10-12", "13-15", "16-18", "19-21", "22-24", "25-27", "28-30", "31-33", "34-36", "37-39", "40-42"])
+    floor_area_sqm = st.number_input("Enter Floor Area (in sqm)", min_value=0.0)
+    flat_model = st.text_input("Enter Flat Model")
+    lease_commence_date = st.number_input("Enter Lease Commence Date (YYYY)", min_value=1900, max_value=2100)
+    remaining_lease = st.number_input("Enter Remaining Lease (in years)", min_value=0.0)
+    residential = st.radio("Is it Residential?", ["Yes", "No"])
+    commercial = st.radio("Is it Commercial?", ["Yes", "No"])
+    market_hawker = st.radio("Close to Market/Hawker?", ["Yes", "No"])
+    miscellaneous = st.radio("Miscellaneous Facilities Available?", ["Yes", "No"])
+    multistorey_carpark = st.radio("Has Multistorey Carpark?", ["Yes", "No"])
+    precinct_pavilion = st.radio("Has Precinct Pavilion?", ["Yes", "No"])
     
     # Load preprocessing and model files
     with open("preprocessing_pipeline.pkl", "rb") as f:
