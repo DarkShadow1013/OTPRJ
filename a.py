@@ -146,10 +146,10 @@ if section == "HDB Flat Price Calculator":
     block = st.text_input("Enter Block Number")
     street_name = st.text_input("Enter Street Name")
     storey_range = st.selectbox("Select Storey Range", ["01-03", "04-06", "07-09", "10-12", "13-15", "16-18", "19-21", "22-24", "25-27", "28-30", "31-33", "34-36", "37-39", "40-42"])
-    floor_area_sqm = st.number_input("Enter Floor Area (in sqm)", min_value=0.0)
+    floor_area_sqm = st.text_input("Enter Floor Area (in sqm)")
     flat_model = st.text_input("Enter Flat Model")
-    lease_commence_date = st.number_input("Enter Lease Commence Date (YYYY)", min_value=1900, max_value=2100)
-    remaining_lease = st.number_input("Enter Remaining Lease (in years)", min_value=0.0)
+    lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
+    remaining_lease = st.text_input("Enter Remaining Lease (in years)")
     residential = st.radio("Is it Residential?", ["Yes", "No"])
     commercial = st.radio("Is it Commercial?", ["Yes", "No"])
     market_hawker = st.radio("Close to Market/Hawker?", ["Yes", "No"])
@@ -179,12 +179,12 @@ if section == "HDB Flat Price Calculator":
                 "flat_model": [flat_model],  # Flat model
                 "lease_commence_date": [lease_commence_date],  # Lease commence date
                 "remaining_lease": [remaining_lease],  # Remaining lease period
-                "residential": [1 if residential == "Yes" else 0],  # Binary encoding for residential
-                "commercial": [1 if commercial == "Yes" else 0],  # Binary encoding for commercial
-                "market_hawker": [1 if market_hawker == "Yes" else 0],  # Binary encoding for market/hawker
-                "miscellaneous": [1 if miscellaneous == "Yes" else 0],  # Binary encoding for miscellaneous facilities
-                "multistorey_carpark": [1 if multistorey_carpark == "Yes" else 0],  # Binary encoding for multistorey carpark
-                "precinct_pavilion": [1 if precinct_pavilion == "Yes" else 0],  # Binary encoding for precinct pavilion
+                "residential": ["Y" if residential == "Yes" else "N"],  # Binary encoding for residential
+                "commercial": ["Y" if commercial == "Yes" else "N"],  # Binary encoding for commercial
+                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  # Binary encoding for market/hawker
+                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  # Binary encoding for miscellaneous facilities
+                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  # Binary encoding for multistorey carpark
+                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  # Binary encoding for precinct pavilion
             })
 
             
