@@ -141,8 +141,8 @@ if section == "HDB Flat Price Calculator":
     
     # User inputs
    # month = st.selectbox("Select Month", ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
-    month = st.selectbox("Select Month")
-    town = st.text_input("Select Town")
+    month = st.text_input("Month")
+    town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
     block = st.text_input("Enter Block Number")
     street_name = st.text_input("Enter Street Name")
