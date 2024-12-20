@@ -147,7 +147,6 @@ if section == "HDB Flat Price Calculator":
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
     lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
     remaining_lease = st.text_input("Enter Remaining Lease (in years)")
-    residential = st.radio("Is it Residential?", ["Yes", "No"])
     commercial = st.radio("Is it Commercial?", ["Yes", "No"])
     market_hawker = st.radio("Close to Market/Hawker?", ["Yes", "No"])
     miscellaneous = st.radio("Miscellaneous Facilities Available?", ["Yes", "No"])
@@ -174,7 +173,7 @@ if section == "HDB Flat Price Calculator":
                 "flat_model": [flat_model],  # Flat model
                 "lease_commence_date": [lease_commence_date],  # Lease commence date
                 "remaining_lease": [remaining_lease],  # Remaining lease period
-                "residential": ["Y" if residential == "Yes" else "N"],  # Binary encoding for residential
+                "residential": "Y",  # Binary encoding for residential
                 "commercial": ["Y" if commercial == "Yes" else "N"],  # Binary encoding for commercial
                 "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  # Binary encoding for market/hawker
                 "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  # Binary encoding for miscellaneous facilities
