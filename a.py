@@ -144,8 +144,6 @@ if section == "HDB Flat Price Calculator":
     month = st.text_input("Month")
     town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
-    block = st.text_input("Enter Block Number")
-    street_name = st.text_input("Enter Street Name")
     storey_range = st.selectbox("Select Storey Range", ["01-03", "04-06", "07-09", "10 TO 12", "13-15", "16-18", "19-21", "22-24", "25-27", "28-30", "31-33", "34-36", "37-39", "40-42"])
     floor_area_sqm = st.text_input("Enter Floor Area (in sqm)")
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
@@ -173,8 +171,6 @@ if section == "HDB Flat Price Calculator":
                 "month": [month],  # Raw month input
                 "town": [town],  # Town name
                 "flat_type": [flat_type],  # Type of flat
-                "block": [block],  # Block number
-                "street_name": [street_name],  # Street name
                 "storey_range": [storey_range],  # Storey range
                 "floor_area_sqm": [floor_area_sqm],  # Floor area in sqm
                 "flat_model": [flat_model],  # Flat model
