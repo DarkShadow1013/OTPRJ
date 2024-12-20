@@ -140,12 +140,10 @@ if section == "HDB Flat Price Calculator":
     st.title("HDB Flat Price Calculator")
     
     # User inputs
-   # month = st.selectbox("Select Month", ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])
-    month = st.text_input("Month")
     town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
-    storey_range = st.selectbox("Select Storey Range", ["01-03", "04-06", "07-09", "10 TO 12", "13-15", "16-18", "19-21", "22-24", "25-27", "28-30", "31-33", "34-36", "37-39", "40-42"])
-    floor_area_sqm = st.text_input("Enter Floor Area (in sqm)")
+    storey_range = st.selectbox("Select Storey Range", ["01 TO 03", "04 TO 06", "07 TO 09", "10 TO 12", "13 TO 15", "16 TO 18", "19 TO 21", "22 TO 24", "25 TO 27", "28 TO 30", "31 TO 33", "34 TO 36", "37 TO 39", "40 TO 42"])
+    floor_area_sqm = st.number_input("Enter Floor Area (in sqm)")
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
     lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
     remaining_lease = st.text_input("Enter Remaining Lease (in years)")
@@ -168,7 +166,7 @@ if section == "HDB Flat Price Calculator":
             # Process inputs
             # Assuming inputs for each variable are collected from the user
             input_data = pd.DataFrame({
-                "month": [month],  # Raw month input
+                "month": "2024-12",  # Raw month input
                 "town": [town],  # Town name
                 "flat_type": [flat_type],  # Type of flat
                 "storey_range": [storey_range],  # Storey range
