@@ -196,36 +196,36 @@ if section == "HDB Flat Price Calculator":
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
 
-    # XAI Explanation Section (SHAP and Feature Importance)
-    st.title("Model Explainability")
+# XAI Explanation Section (SHAP and Feature Importance)
+st.title("Model Explainability")
 
-    # SHAP explanation
-    if st.button("Explain Prediction with SHAP"):
-        try:
-            # Initialize SHAP explainer
-            explainer = shap.Explainer(model)
-            shap_values = explainer(processed_data)
+# SHAP explanation
+if st.button("Explain Prediction with SHAP"):
+    try:
+        # Initialize SHAP explainer
+        explainer = shap.Explainer(model)
+        shap_values = explainer(processed_data)
 
-            # SHAP summary plot
-            st.write("SHAP Summary Plot")
-            shap.summary_plot(shap_values, processed_data, show=False)
-            st.pyplot(plt)
+        # SHAP summary plot
+        st.write("SHAP Summary Plot")
+        shap.summary_plot(shap_values, processed_data, show=False)
+        st.pyplot(plt)
 
-            # SHAP force plot
-            st.write("SHAP Force Plot for First Prediction")
-            shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True)
-            st.pyplot(plt)
-        except Exception as e:
-            st.error(f"Error in SHAP explanation: {e}")
+        # SHAP force plot
+        st.write("SHAP Force Plot for First Prediction")
+        shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True)
+        st.pyplot(plt)
+    except Exception as e:
+        st.error(f"Error in SHAP explanation: {e}")
 
-    # Feature importance
-    if st.button("Show Feature Importance"):
-        try:
-            st.write("Feature Importance Plot")
-            ax = xgb.plot_importance(model, importance_type="gain", max_num_features=10)
-            st.pyplot(ax.figure)
-        except Exception as e:
-            st.error(f"Error in plotting feature importance: {e}")
+# Feature importance
+if st.button("Show Feature Importance"):
+    try:
+        st.write("Feature Importance Plot")
+        ax = xgb.plot_importance(model, importance_type="gain", max_num_features=10)
+        st.pyplot(ax.figure)
+    except Exception as e:
+        st.error(f"Error in plotting feature importance: {e}")
 
 # Line Chart Section
 if section == "Price Chart":
