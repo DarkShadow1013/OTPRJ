@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import xgboost as xgb
 import gdown
 from pathlib import Path
 import pickle
