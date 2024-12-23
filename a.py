@@ -170,7 +170,8 @@ if section == "HDB Flat Price Calculator":
         try:
             # Process inputs
             input_data = pd.DataFrame({
-                "month": "2024-12",  # Raw month input
+                "year": "2024",
+                "month_num": "12",  # Raw month input
                 "town": [town],  
                 "flat_type": [flat_type],  
                 "storey_range": [storey_range],  
