@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 import gdown
 from pathlib import Path
 import pickle
+import shap
+from lime.lime_tabular import LimeTabularExplainer
 # Set your OpenAI API key from .env file or directly set it here
 openai.api_key = st.secrets["openai"]["api_key"]
 
@@ -142,7 +144,11 @@ if section == "HDB Flat Price Calculator":
     # User inputs
     town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
-    storey_range = st.selectbox("Select Storey Range", ["01 TO 03", "04 TO 06", "07 TO 09", "10 TO 12", "13 TO 15", "16 TO 18", "19 TO 21", "22 TO 24", "25 TO 27", "28 TO 30", "31 TO 33", "34 TO 36", "37 TO 39", "40 TO 42"])
+    storey_range = st.selectbox("Select Storey Range", [
+        "01 TO 03", "04 TO 06", "07 TO 09", "10 TO 12", 
+        "13 TO 15", "16 TO 18", "19 TO 21", "22 TO 24", 
+        "25 TO 27", "28 TO 30", "31 TO 33", "34 TO 36", 
+        "37 TO 39", "40 TO 42"])
     floor_area_sqm = st.number_input("Enter Floor Area (in sqm)")
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
     lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
@@ -163,36 +169,62 @@ if section == "HDB Flat Price Calculator":
     if st.button("Calculate Price"):
         try:
             # Process inputs
-            # Assuming inputs for each variable are collected from the user
             input_data = pd.DataFrame({
                 "month": "2024-12",  # Raw month input
-                "town": [town],  # Town name
-                "flat_type": [flat_type],  # Type of flat
-                "storey_range": [storey_range],  # Storey range
-                "floor_area_sqm": [floor_area_sqm],  # Floor area in sqm
-                "flat_model": [flat_model],  # Flat model
-                "lease_commence_date": [lease_commence_date],  # Lease commence date
-                "remaining_lease": [remaining_lease],  # Remaining lease period
-                "residential": "Y",  # Binary encoding for residential
-                "commercial": ["Y" if commercial == "Yes" else "N"],  # Binary encoding for commercial
-                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  # Binary encoding for market/hawker
-                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  # Binary encoding for miscellaneous facilities
-                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  # Binary encoding for multistorey carpark
-                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  # Binary encoding for precinct pavilion
+                "town": [town],  
+                "flat_type": [flat_type],  
+                "storey_range": [storey_range],  
+                "floor_area_sqm": [floor_area_sqm],  
+                "flat_model": [flat_model],  
+                "lease_commence_date": [lease_commence_date],  
+                "remaining_lease": [remaining_lease],  
+                "residential": "Y",  
+                "commercial": ["Y" if commercial == "Yes" else "N"],  
+                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  
+                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  
+                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  
+                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  
             })
 
-            
             # Preprocess inputs
             processed_data = preprocessing.transform(input_data)
-            
+
             # Predict using the model
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
+
+            # SHAP Explanation
+            st.subheader("SHAP Explanation")
+            shap.initjs()
+
+            explainer_shap = shap.TreeExplainer(model)  # Assuming your model is tree-based
+            shap_values = explainer_shap.shap_values(processed_data)
+
+            # Display SHAP summary plot
+            shap.summary_plot(shap_values, processed_data, feature_names=preprocessing.get_feature_names_out(), show=False)
+            st.pyplot()
+
+            # LIME Explanation
+            st.subheader("LIME Explanation")
+
+            explainer_lime = LimeTabularExplainer(
+                training_data=preprocessing.transform(X_train), 
+                feature_names=preprocessing.get_feature_names_out(), 
+                mode="regression", 
+                random_state=42
+            )
+
+            explanation = explainer_lime.explain_instance(
+                data_row=processed_data[0],  # Use the first row
+                predict_fn=model.predict
+            )
+
+            # Display LIME explanation
+            explanation_fig = explanation.as_pyplot_figure()
+            st.pyplot(explanation_fig)
+
         except Exception as e:
             st.error(f"Error in prediction: {e}")
-
-
-
 
 
 # Line Chart Section
