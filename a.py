@@ -153,8 +153,8 @@ if section == "HDB Flat Price Calculator":
         "37 TO 39", "40 TO 42"])
     floor_area_sqm = st.number_input("Enter Floor Area (in sqm)")
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
-    lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
-    remaining_lease = st.text_input("Enter Remaining Lease (in years)")
+    lease_commence_date = st.number_input("Enter Lease Commence Date (YYYY)")
+    remaining_lease = st.number_input("Enter Remaining Lease (in years)")
     
     # Load preprocessing and model files
     with open("preprocessing_pipeline.pkl", "rb") as f:
