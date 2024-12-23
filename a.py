@@ -184,6 +184,8 @@ if section == "HDB Flat Price Calculator":
             # Predict using the model
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
+        except Exception as e:
+            st.error(f"Error during price prediction: {e}")
             
     # XAI Explanation Section (SHAP and Feature Importance)
     st.title("Model Explainability")
