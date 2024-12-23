@@ -162,7 +162,7 @@ if section == "HDB Flat Price Calculator":
     # Load preprocessing and model files
     with open("preprocessing_pipeline.pkl", "rb") as f:
         preprocessing = pickle.load(f)
-    with open("linear_model.pkl", "rb") as f:
+    with open("best_model.pkl", "rb") as f:
         model = pickle.load(f)
 
     # Predict price
