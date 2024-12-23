@@ -195,14 +195,15 @@ if section == "HDB Flat Price Calculator":
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
 
             # Explain model prediction using SHAP
-            explainer = shap.Explainer(model, preprocessing.transform)
-            shap_values = explainer(processed_data)
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(processed_data)
 
             # Force Plot
             st.subheader("SHAP Force Plot")
             force_fig = shap.force_plot(
                 explainer.expected_value,
                 shap_values[0],
+                processed_data.iloc[0],
                 feature_names=preprocessing.get_feature_names_out(),
                 matplotlib=True
             )
@@ -224,7 +225,7 @@ if section == "HDB Flat Price Calculator":
                 feature_names=preprocessing.get_feature_names_out(),
                 interaction_index=interaction_feature if interaction_feature else None,
                 ax=ax
-            )
+            )            
             st.pyplot(fig)
 
         except Exception as e:
