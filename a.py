@@ -138,17 +138,23 @@ if section == "Home":
 
 
 
+# Load preprocessing and model files
+with open("preprocessing_pipeline.pkl", "rb") as f:
+    preprocessing = pickle.load(f)
+with open("best_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
 # Price Calculator Section
-if section == "HDB Flat Price Calculator":
+if st.sidebar.selectbox("Choose Section", ["HDB Flat Price Calculator", "Explainability"]) == "HDB Flat Price Calculator":
     st.title("HDB Flat Price Calculator")
-    
+
     # User inputs
     town = st.selectbox("Select Town", df_all["town"].unique())
     flat_type = st.selectbox("Select Flat Type", df_all["flat_type"].unique())
     storey_range = st.selectbox("Select Storey Range", [
-        "01 TO 03", "04 TO 06", "07 TO 09", "10 TO 12", 
-        "13 TO 15", "16 TO 18", "19 TO 21", "22 TO 24", 
-        "25 TO 27", "28 TO 30", "31 TO 33", "34 TO 36", 
+        "01 TO 03", "04 TO 06", "07 TO 09", "10 TO 12",
+        "13 TO 15", "16 TO 18", "19 TO 21", "22 TO 24",
+        "25 TO 27", "28 TO 30", "31 TO 33", "34 TO 36",
         "37 TO 39", "40 TO 42"])
     floor_area_sqm = st.number_input("Enter Floor Area (in sqm)")
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
@@ -159,12 +165,6 @@ if section == "HDB Flat Price Calculator":
     miscellaneous = st.radio("Miscellaneous Facilities Available?", ["Yes", "No"])
     multistorey_carpark = st.radio("Has Multistorey Carpark?", ["Yes", "No"])
     precinct_pavilion = st.radio("Has Precinct Pavilion?", ["Yes", "No"])
-    
-    # Load preprocessing and model files
-    with open("preprocessing_pipeline.pkl", "rb") as f:
-        preprocessing = pickle.load(f)
-    with open("best_model.pkl", "rb") as f:
-        model = pickle.load(f)
 
     # Predict price
     if st.button("Calculate Price"):
@@ -172,20 +172,20 @@ if section == "HDB Flat Price Calculator":
             # Process inputs
             input_data = pd.DataFrame({
                 "year": "2024",
-                "month_num": "12",  # Raw month input
-                "town": [town],  
-                "flat_type": [flat_type],  
-                "storey_range": [storey_range],  
-                "floor_area_sqm": [floor_area_sqm],  
-                "flat_model": [flat_model],  
-                "lease_commence_date": [lease_commence_date],  
-                "remaining_lease": [remaining_lease],  
-                "residential": "Y",  
-                "commercial": ["Y" if commercial == "Yes" else "N"],  
-                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  
-                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  
-                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  
-                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  
+                "month_num": "12",
+                "town": [town],
+                "flat_type": [flat_type],
+                "storey_range": [storey_range],
+                "floor_area_sqm": [floor_area_sqm],
+                "flat_model": [flat_model],
+                "lease_commence_date": [lease_commence_date],
+                "remaining_lease": [remaining_lease],
+                "residential": "Y",
+                "commercial": ["Y" if commercial == "Yes" else "N"],
+                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],
+                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],
+                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],
+                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],
             })
 
             # Preprocess inputs
@@ -194,49 +194,40 @@ if section == "HDB Flat Price Calculator":
             # Predict using the model
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
-
-            # Convert the processed data to a DataFrame
-            feature_names = preprocessing.get_feature_names_out()  # Get feature names from the preprocessor
-            processed_data_df = pd.DataFrame(processed_data, columns=feature_names)
-
-            # Explain model prediction using SHAP
-            explainer = shap.TreeExplainer(model)
-            shap_values = explainer.shap_values(processed_data_df)
-
-            # Force Plot
-            st.subheader("SHAP Force Plot")
-            force_fig = shap.force_plot(
-                explainer.expected_value,
-                shap_values[0],
-                processed_data_df.iloc[0],
-                feature_names=feature_names,
-                matplotlib=True
-            )
-            st.pyplot(force_fig)
-
-            # Feature Dependence Plot
-            st.subheader("Feature Dependence Plot")
-            feature_to_plot = st.selectbox("Select a feature to analyze", feature_names)
-            interaction_feature = st.selectbox(
-            "Select an interaction feature (optional)",
-            [None] + list(feature_names)
-            )
-
-            fig, ax = plt.subplots()
-            shap.dependence_plot(
-                feature_to_plot,
-                shap_values,
-                processed_data_df,
-                feature_names=feature_names,
-                interaction_index=interaction_feature if interaction_feature else None,
-                ax=ax
-            )
-            st.pyplot(fig)
-
-           
-
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            st.error(f"Error: {e}")
+
+# Explainability Section
+else:
+    st.title("Model Explainability")
+
+    # SHAP explanation
+    if st.button("Explain Prediction with SHAP"):
+        try:
+            # Initialize SHAP explainer
+            explainer = shap.Explainer(model)
+            shap_values = explainer(processed_data)
+
+            # SHAP summary plot
+            st.write("SHAP Summary Plot")
+            shap.summary_plot(shap_values, processed_data, show=False)
+            st.pyplot(plt)
+
+            # SHAP force plot
+            st.write("SHAP Force Plot for First Prediction")
+            shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True)
+            st.pyplot(plt)
+        except Exception as e:
+            st.error(f"Error in SHAP explanation: {e}")
+
+    # Feature importance
+    if st.button("Show Feature Importance"):
+        try:
+            st.write("Feature Importance Plot")
+            ax = xgb.plot_importance(model, importance_type="gain", max_num_features=10)
+            st.pyplot(ax.figure)
+        except Exception as e:
+            st.error(f"Error in plotting feature importance: {e}")
 
 # Line Chart Section
 if section == "Price Chart":
