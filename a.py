@@ -200,6 +200,10 @@ if section == "HDB Flat Price Calculator":
 
     # XAI Explanation Section (SHAP and Feature Importance)
     st.title("Model Explainability")
+    
+    # Convert the processed data to a DataFrame
+    feature_names = preprocessing.get_feature_names_out()  # Get feature names from the preprocessor
+    processed_data_df = pd.DataFrame(processed_data, columns=feature_names)
 
     # SHAP explanation
     if st.button("Explain Prediction with SHAP"):
@@ -215,10 +219,11 @@ if section == "HDB Flat Price Calculator":
 
             # SHAP force plot with feature names
             st.write("SHAP Force Plot for First Prediction")
-            shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True, feature_names=input_data.columns)
+            shap.force_plot(explainer.expected_value, shap_values[0], processed_data_df.iloc[0], matplotlib=True, feature_names=input_data.columns)
             st.pyplot(plt)
         except Exception as e:
             st.error(f"Error in SHAP explanation: {e}")
+            
     # Feature importance
     if st.button("Show Feature Importance"):
         try:
