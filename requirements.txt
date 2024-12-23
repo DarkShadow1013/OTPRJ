@@ -6,3 +6,5 @@ openai==0.28
 pathlib
 scikit-learn
 xgboost
+shap
+lime
