@@ -2,6 +2,7 @@ import openai
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 import gdown
 from pathlib import Path
 import pickle
