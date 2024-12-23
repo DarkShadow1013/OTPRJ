@@ -194,21 +194,41 @@ if section == "HDB Flat Price Calculator":
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
 
-            # SHAP explanation
-            st.subheader("Explainability: Feature Contributions")
+            # Explain model prediction using SHAP
+            explainer = shap.Explainer(model, preprocessing.transform)
+            shap_values = explainer(processed_data)
 
-            # Initialize SHAP Explainer
-            explainer = shap.TreeExplainer(model)
-            shap_values = explainer.shap_values(processed_data)
+            # Force Plot
+            st.subheader("SHAP Force Plot")
+            force_fig = shap.force_plot(
+                explainer.expected_value,
+                shap_values[0],
+                feature_names=preprocessing.get_feature_names_out(),
+                matplotlib=True
+            )
+            st.pyplot(force_fig)
 
-            # Create a summary plot
-            st.pyplot(shap.summary_plot(shap_values, processed_data, feature_names=preprocessing.get_feature_names_out()))
+            # Feature Dependence Plot
+            st.subheader("Feature Dependence Plot")
+            feature_to_plot = st.selectbox("Select a feature to analyze", preprocessing.get_feature_names_out())
+            interaction_feature = st.selectbox(
+                "Select an interaction feature (optional)", 
+                [None] + list(preprocessing.get_feature_names_out())
+            )
 
-            # Create a force plot for a single prediction
-            st.pyplot(shap.force_plot(explainer.expected_value, shap_values[0], processed_data[0], feature_names=preprocessing.get_feature_names_out()))
+            fig, ax = plt.subplots()
+            shap.dependence_plot(
+                feature_to_plot,
+                shap_values,
+                processed_data,
+                feature_names=preprocessing.get_feature_names_out(),
+                interaction_index=interaction_feature if interaction_feature else None,
+                ax=ax
+            )
+            st.pyplot(fig)
 
         except Exception as e:
-            st.error(f"Error: {e}")
+            st.error(f"An error occurred: {e}")
 
 # Line Chart Section
 if section == "Price Chart":
