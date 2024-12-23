@@ -194,6 +194,10 @@ if section == "HDB Flat Price Calculator":
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
 
+            # Convert the processed data to a DataFrame
+            feature_names = preprocessing.get_feature_names_out()  # Get feature names from the preprocessor
+            processed_data_df = pd.DataFrame(processed_data, columns=feature_names)
+
             # Explain model prediction using SHAP
             explainer = shap.TreeExplainer(model)
             shap_values = explainer.shap_values(processed_data)
