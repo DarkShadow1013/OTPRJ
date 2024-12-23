@@ -194,39 +194,31 @@ if section == "HDB Flat Price Calculator":
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
 
-            # SHAP Explanation
-            st.subheader("SHAP Explanation")
-            shap.initjs()
+            # SHAP explanation
+            st.subheader("Explainability: Feature Contributions")
 
-            explainer_shap = shap.TreeExplainer(model)  # Assuming your model is tree-based
-            shap_values = explainer_shap.shap_values(processed_data)
+            # Initialize SHAP Explainer
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(processed_data)
 
-            # Display SHAP summary plot
-            shap.summary_plot(shap_values, processed_data, feature_names=preprocessing.get_feature_names_out(), show=False)
-            st.pyplot()
+            # Feature Dependence Plot
+            st.subheader("Feature Dependence Plot")
+            feature_to_plot = st.selectbox("Select a feature to analyze", preprocessing.get_feature_names_out())
+            interaction_feature = st.selectbox("Select an interaction feature (optional)", [None] + list(preprocessing.get_feature_names_out()))
 
-            # LIME Explanation
-            st.subheader("LIME Explanation")
-
-            explainer_lime = LimeTabularExplainer(
-                training_data=preprocessing.transform(X_train), 
-                feature_names=preprocessing.get_feature_names_out(), 
-                mode="regression", 
-                random_state=42
+            # Plot dependence
+            fig = shap.dependence_plot(
+                feature_to_plot,
+                shap_values,
+                processed_data,
+                feature_names=preprocessing.get_feature_names_out(),
+                interaction_index=interaction_feature if interaction_feature != "None" else None,
+                show=False
             )
-
-            explanation = explainer_lime.explain_instance(
-                data_row=processed_data[0],  # Use the first row
-                predict_fn=model.predict
-            )
-
-            # Display LIME explanation
-            explanation_fig = explanation.as_pyplot_figure()
-            st.pyplot(explanation_fig)
+            st.pyplot(fig)
 
         except Exception as e:
-            st.error(f"Error in prediction: {e}")
-
+            st.error(f"Error: {e}")
 
 # Line Chart Section
 if section == "Price Chart":
