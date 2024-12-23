@@ -201,21 +201,11 @@ if section == "HDB Flat Price Calculator":
             explainer = shap.TreeExplainer(model)
             shap_values = explainer.shap_values(processed_data)
 
-            # Feature Dependence Plot
-            st.subheader("Feature Dependence Plot")
-            feature_to_plot = st.selectbox("Select a feature to analyze", preprocessing.get_feature_names_out())
-            interaction_feature = st.selectbox("Select an interaction feature (optional)", [None] + list(preprocessing.get_feature_names_out()))
+            # Create a summary plot
+            st.pyplot(shap.summary_plot(shap_values, processed_data, feature_names=preprocessing.get_feature_names_out()))
 
-            # Plot dependence
-            fig = shap.dependence_plot(
-                feature_to_plot,
-                shap_values,
-                processed_data,
-                feature_names=preprocessing.get_feature_names_out(),
-                interaction_index=interaction_feature if interaction_feature != "None" else None,
-                show=False
-            )
-            st.pyplot(fig)
+            # Create a force plot for a single prediction
+            st.pyplot(shap.force_plot(explainer.expected_value, shap_values[0], processed_data[0], feature_names=preprocessing.get_feature_names_out()))
 
         except Exception as e:
             st.error(f"Error: {e}")
