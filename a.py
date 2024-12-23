@@ -177,7 +177,7 @@ if section == "HDB Flat Price Calculator":
 
     # Preprocess inputs
     processed_data = preprocessing.transform(input_data)
-
+    
     # Predict price
     if st.button("Calculate Price"):
         try:
