@@ -155,11 +155,6 @@ if section == "HDB Flat Price Calculator":
     flat_model = st.selectbox("Enter Flat Model", df_all["flat_model"].unique())
     lease_commence_date = st.text_input("Enter Lease Commence Date (YYYY)")
     remaining_lease = st.text_input("Enter Remaining Lease (in years)")
-    commercial = st.radio("Is it Commercial?", ["Yes", "No"])
-    market_hawker = st.radio("Close to Market/Hawker?", ["Yes", "No"])
-    miscellaneous = st.radio("Miscellaneous Facilities Available?", ["Yes", "No"])
-    multistorey_carpark = st.radio("Has Multistorey Carpark?", ["Yes", "No"])
-    precinct_pavilion = st.radio("Has Precinct Pavilion?", ["Yes", "No"])
     
     # Load preprocessing and model files
     with open("preprocessing_pipeline.pkl", "rb") as f:
@@ -178,12 +173,6 @@ if section == "HDB Flat Price Calculator":
         "flat_model": [flat_model],  
         "lease_commence_date": [lease_commence_date],  
         "remaining_lease": [remaining_lease],  
-        "residential": "Y",  
-        "commercial": ["Y" if commercial == "Yes" else "N"],  
-        "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  
-        "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  
-        "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  
-        "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  
     })
 
     # Preprocess inputs
