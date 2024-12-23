@@ -208,18 +208,17 @@ if section == "HDB Flat Price Calculator":
             explainer = shap.Explainer(model)
             shap_values = explainer(processed_data)
 
-            # SHAP summary plot
+            # SHAP summary plot with feature names
             st.write("SHAP Summary Plot")
-            shap.summary_plot(shap_values, processed_data, show=False)
+            shap.summary_plot(shap_values, processed_data, feature_names=input_data.columns, show=False)
             st.pyplot(plt)
 
-            # SHAP force plot
+            # SHAP force plot with feature names
             st.write("SHAP Force Plot for First Prediction")
-            shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True)
+            shap.force_plot(explainer.expected_value, shap_values[0], processed_data.iloc[0], matplotlib=True, feature_names=input_data.columns)
             st.pyplot(plt)
         except Exception as e:
             st.error(f"Error in SHAP explanation: {e}")
-
     # Feature importance
     if st.button("Show Feature Importance"):
         try:
