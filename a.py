@@ -167,31 +167,31 @@ if section == "HDB Flat Price Calculator":
     with open("best_model.pkl", "rb") as f:
         model = pickle.load(f)
 
+    # Process inputs for prediction and XAI explanation
+    input_data = pd.DataFrame({
+        "year": "2024",
+        "month_num": "12",  # Raw month input
+        "town": [town],  
+        "flat_type": [flat_type],  
+        "storey_range": [storey_range],  
+        "floor_area_sqm": [floor_area_sqm],  
+        "flat_model": [flat_model],  
+        "lease_commence_date": [lease_commence_date],  
+        "remaining_lease": [remaining_lease],  
+        "residential": "Y",  
+        "commercial": ["Y" if commercial == "Yes" else "N"],  
+        "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  
+        "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  
+        "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  
+        "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  
+    })
+
+    # Preprocess inputs
+    processed_data = preprocessing.transform(input_data)
+
     # Predict price
     if st.button("Calculate Price"):
         try:
-            # Process inputs
-            input_data = pd.DataFrame({
-                "year": "2024",
-                "month_num": "12",  # Raw month input
-                "town": [town],  
-                "flat_type": [flat_type],  
-                "storey_range": [storey_range],  
-                "floor_area_sqm": [floor_area_sqm],  
-                "flat_model": [flat_model],  
-                "lease_commence_date": [lease_commence_date],  
-                "remaining_lease": [remaining_lease],  
-                "residential": "Y",  
-                "commercial": ["Y" if commercial == "Yes" else "N"],  
-                "market_hawker": ["Y" if market_hawker == "Yes" else "N"],  
-                "miscellaneous": ["Y" if miscellaneous == "Yes" else "N"],  
-                "multistorey_carpark": ["Y" if multistorey_carpark == "Yes" else "N"],  
-                "precinct_pavilion": ["Y" if precinct_pavilion == "Yes" else "N"],  
-            })
-
-            # Preprocess inputs
-            processed_data = preprocessing.transform(input_data)
-
             # Predict using the model
             prediction = model.predict(processed_data)
             st.success(f"Estimated Resale Price: ${prediction[0]:,.2f}")
