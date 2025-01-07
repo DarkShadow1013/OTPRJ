@@ -201,14 +201,16 @@ if section == "HDB Flat Price Calculator":
             explainer = shap.Explainer(model)
             shap_values = explainer(processed_data_df)
 
-            # SHAP summary plot with feature names
+            # SHAP summary plot with smaller size
             st.write("SHAP Summary Plot")
             shap.summary_plot(shap_values, processed_data_df, feature_names=feature_names, show=False)
+            plt.gcf().set_size_inches(8, 4)  # Adjust plot size (width, height)
             st.pyplot(plt)
 
-            # SHAP force plot with feature names
+            # SHAP force plot with smaller size
             st.write("SHAP Force Plot for First Prediction")
             shap.force_plot(explainer.expected_value, shap_values[0].values, processed_data_df.iloc[0], matplotlib=True, feature_names=feature_names)
+            plt.gcf().set_size_inches(8, 4)  # Adjust plot size (width, height)
             st.pyplot(plt)
         except Exception as e:
             st.error(f"Error in SHAP explanation: {e}")
@@ -217,8 +219,9 @@ if section == "HDB Flat Price Calculator":
     if st.button("Show Feature Importance"):
         try:
             st.write("Feature Importance Plot")
-            ax = xgb.plot_importance(model, importance_type="gain", max_num_features=10)
-            st.pyplot(ax.figure)
+            fig, ax = plt.subplots(figsize=(6, 4))  # Adjust figure size (width, height)
+            xgb.plot_importance(model, importance_type="gain", max_num_features=10, ax=ax)
+            st.pyplot(fig)
         except Exception as e:
             st.error(f"Error in plotting feature importance: {e}")
 
